@@ -73,8 +73,59 @@ if (hashTable->table[key] == NULL) {
 void removeData(HTable *hashTable, int key)
 {
 
+  	Node *temp = hashTable->table[key];
+  	Node *temp2;
+
+  	if (hashTable->table[key] == NULL)
+  		return;
+
+  	if (hashTable->compare(data,temp->data) == 0) {
+  		hashTable->destroyData(temp->data);
+  		hashTable->table[key] = temp->next;
+  		free(temp);
+  		temp = NULL;
+  		return;
+  	}
+
+
+  	while (temp != NULL) {
+  		if (hashTable->compare(data,temp->next->data) == 0) {
+  			/* if in the middle of list */
+  			if (temp->next->next != NULL) {
+  				hashTable->destroyData(temp->next->data);
+  				temp2 = temp->next;
+  				temp->next = temp2->next;
+  				free(temp2);
+  				temp2 = NULL;
+  				break;
+  			/* if at the end of list */
+  			} else if (temp->next->next == NULL) {
+  				hashTable->destroyData(temp->next->data);
+  				free(temp->next);
+  				temp->next = NULL;
+  				break;
+  			}
+  		}
+  		temp = temp->next;
+  	}
+
+  }
 }
 void *lookupData(HTable *hashTable, int key)
 {
  int loc = hashTable->hashFunction(hashTable->size, key);
+
+ if (key > hashTable->size)
+		return NULL;
+
+	Node *temp = hashTable->table[key];
+	while (temp != NULL) {
+
+		if (hashTable->compare(data,temp->data) == 0)
+			return hashTable->table[key]->data;
+
+		temp = temp->next;
+	}
+
+return NULL;
 }

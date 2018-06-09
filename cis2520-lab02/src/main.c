@@ -2,6 +2,19 @@
 
 #include"HashTableAPI.h"
 
+int hashFunction(size_t tableSize, void* data) {
+
+	int key = 0;
+	int j = 1;
+	char *word = (char*)data;
+	for (int i=0; i<strlen(word); ++i) {
+		key += word[i] * j;
+		++j;
+	}
+	key = (word[0] * key) % tableSize;
+	return key;
+}
+
 int print(void *toBePrinted)
 {
   int number;
