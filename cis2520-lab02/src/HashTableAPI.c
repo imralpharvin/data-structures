@@ -16,7 +16,7 @@ HTable *createTable(size_t size, int (*hashFunction)(size_t tableSize, int key),
     {
 		newHTable->table[i] = malloc(sizeof(Node));
 		newHTable->table[i] = NULL;
-	}
+	  }
 
 	return newHTable;
 }
@@ -32,19 +32,19 @@ Node *createNode(int key, void *data)
 }
 void destroyTable(HTable *hashTable)
 {
-    Node *tempNode;
+  /*  Node *tempNode;
 	for (int i = 0; i < hashTable->size ; i++)
     {
 		tempNode = hashTable->table[i];
 		while (tempNode != NULL)
       {
-			/*removeData(hashTable, i, temp->data);*/
+			/*removeData(hashTable, i, temp->data);
 			tempNode = tempNode->next;
 		}
 	}
 
     free(hashTable->table);
-	free(hashTable);
+	free(hashTable);*/
 }
 void insertData(HTable *hashTable, int key, void *data)
 {
@@ -62,6 +62,7 @@ void insertData(HTable *hashTable, int key, void *data)
 
         else
         {
+          printf("here\n");
           hashTable->table[key] = newNode;
         }
     }
