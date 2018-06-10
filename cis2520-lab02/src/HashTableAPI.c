@@ -2,6 +2,7 @@
 
 #include "HashTableAPI.h"
 
+
 HTable *createTable(size_t size, int (*hashFunction)(size_t tableSize, int key),void (*destroyData)(void *data),void (*printData)(void *toBePrinted))
 {
     HTable * newHTable = malloc(sizeof(HTable));
@@ -37,7 +38,7 @@ void destroyTable(HTable *hashTable)
 		tempNode = hashTable->table[i];
 		while (tempNode != NULL)
       {
-			removeData(hashTable, i, temp->data);
+			/*removeData(hashTable, i, temp->data);*/
 			tempNode = tempNode->next;
 		}
 	}
@@ -47,7 +48,7 @@ void destroyTable(HTable *hashTable)
 }
 void insertData(HTable *hashTable, int key, void *data)
 {
-    if(HTable != NULL)
+    if(hashTable != NULL)
     {
         Node *newNode = createNode(key, data);
         int index = hashTable->hashFunction(hashTable->size, key);
@@ -64,11 +65,11 @@ void insertData(HTable *hashTable, int key, void *data)
           hashTable->table[key] = newNode;
         }
     }
-if (hashTable->table[key] == NULL) {
+/*if (hashTable->table[key] == NULL) {
 
 		hashTable->table[key] = newNode;
 
-	}
+	}*/
 }
 void removeData(HTable *hashTable, int key)
 {
@@ -79,18 +80,18 @@ void removeData(HTable *hashTable, int key)
   	if (hashTable->table[key] == NULL)
   		return;
 
-  	if (hashTable->compare(data,temp->data) == 0) {
+  /*	if (hashTable->compare(data,temp->data) == 0) {
   		hashTable->destroyData(temp->data);
   		hashTable->table[key] = temp->next;
   		free(temp);
   		temp = NULL;
   		return;
-  	}
+  	}*/
 
 
-  	while (temp != NULL) {
+  	/*while (temp != NULL) {
   		if (hashTable->compare(data,temp->next->data) == 0) {
-  			/* if in the middle of list */
+
   			if (temp->next->next != NULL) {
   				hashTable->destroyData(temp->next->data);
   				temp2 = temp->next;
@@ -98,7 +99,7 @@ void removeData(HTable *hashTable, int key)
   				free(temp2);
   				temp2 = NULL;
   				break;
-  			/* if at the end of list */
+
   			} else if (temp->next->next == NULL) {
   				hashTable->destroyData(temp->next->data);
   				free(temp->next);
@@ -107,13 +108,13 @@ void removeData(HTable *hashTable, int key)
   			}
   		}
   		temp = temp->next;
-  	}
+  	}*/
 
   }
-}
+
 void *lookupData(HTable *hashTable, int key)
 {
- int loc = hashTable->hashFunction(hashTable->size, key);
+ /*int loc = hashTable->hashFunction(hashTable->size, key);
 
  if (key > hashTable->size)
 		return NULL;
@@ -125,7 +126,7 @@ void *lookupData(HTable *hashTable, int key)
 			return hashTable->table[key]->data;
 
 		temp = temp->next;
-	}
+	}*/
 
 return NULL;
 }
