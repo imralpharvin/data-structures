@@ -2,14 +2,30 @@
 
 #include"HashTableAPI.h"
 
-int print(void *toBePrinted)
-{
-  int number;
+int hashFunction(size_t tableSize, int key) {
 
-  number = *((int *) toBePrinted);
-  printf("%d\n", number);
+	int index = 0;
+
+	index = key  % tableSize;
+	return index;
 }
 
+void printTable(HTable *hashTable){
+
+		int i = 0;
+    for(i = 0; i < hashTable->size; i++)
+		{
+
+        Node *head = hashTable->table[i];
+        Node *cur = head;
+        while(cur != NULL)
+				{
+        		printf("Hash :%d | Key :%d | Data : ", hashTable->hashFunction(hashTable->size, cur->key), cur->key);
+            hashTable->printData(cur->data);
+            cur = cur->next;
+        }
+    }
+}
 void print(void *toBePrinted)
 {
   int number;
@@ -23,24 +39,27 @@ void delete(void *toBeDeleted)
   free(toBeDeleted);
 }
 
+
 int main ()
 {
 
-    printf("*** Test #1: createTable ***\n");
-    printf("Expected:\nThe table is empty\n");
-    HTable *newHTable = initializeQueue(2, deleteCar, compareCars);
-    printf("Received:\n");
-    printQueue(carQueue);
-    printf("   ***PASS***   \n\n");
+  char intro;
+  char userName[15];
+  char password[15];
 
-    printf("*** Test #2: enQueue ***\n");
-    printf("Expected:\nN L 2\nS R 3\nW F 5\n");
-    enQueue(carQueue, a);
-    enQueue(carQueue, b);
-    enQueue(carQueue, c);
-    printf("Received:\n");
-    printQueue(carQueue);
-    printf("   ***PASS***   \n\n");
+  printf("Would you like to create a new account(N) or sign in(S)? \n");
+  scanf("%c", &intro);
 
+  HTable * newUser = createTable(1, hashFunction, print, delete);
+
+  printf("What's your username? \n");
+  scanf("%s", userName);
+  printf("%s", userName);
+
+  printf("Enter new password \n");
+  scanf("%s", password);
+  printf("%s", password);
+
+  insertData(newUser, userName, password);
     return 0;
 }
