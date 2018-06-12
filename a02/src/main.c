@@ -1,14 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include"HashTableAPI.h"
+#include"PasswordVault.h"
 
-struct student_struct {
-     char last_name[64];
-     char first_name[64];
-     char middle_names[64];
-     int id;
-     char major[64];
-};
+
 int hashFunction(size_t tableSize, char key[]) {
 
 	int index = 0;
@@ -69,20 +64,17 @@ int main ()
   printf("Would you like to create a new account(N) or sign in(S)? \n");
   scanf("%c", &intro);
 
-  HTable * newUser = createTable(1, hashFunction, delete, print);
 	HTable * newFile = createTable(109, hashFunction, delete, print);
 
   printf("What's your username? \n");
   scanf("%s", userName);
-	fp1 = fopen("students.bin","wb");
 
 
   printf("Enter new password \n");
   scanf("%s", password);
 
+  User * newUser = createUser(userName, password);
 
-
-  insertData(newUser, userName, password);
 /*	printTable(newUser);*/
 
 	scanf("%c", &option);

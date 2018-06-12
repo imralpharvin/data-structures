@@ -1,6 +1,13 @@
 #include <stdio.h>
+#include "HashTableAPI.h"
+#include "PasswordVault.h"
 
-int main()
+User * createUser(char username[], char password[])
 {
-  return 0;
+  User * newUser = malloc(sizeof(User));
+
+  newUser->username = username;
+  newUser->password = password;
+
+  return newUser;
 }
