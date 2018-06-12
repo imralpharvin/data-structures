@@ -1,12 +1,29 @@
 #include <stdio.h>
-
+#include <string.h>
 #include"HashTableAPI.h"
 
-int hashFunction(size_t tableSize, int key) {
+struct student_struct {
+     char last_name[64];
+     char first_name[64];
+     char middle_names[64];
+     int id;
+     char major[64];
+};
+int hashFunction(size_t tableSize, char key[]) {
 
 	int index = 0;
+	int letter;
+	int i;
+	int total = 0;
 
-	index = key  % tableSize;
+	letter = strlen(key);
+	for(i = 0; i < letter; i++)
+	{
+		int temp = key[i] - '0';
+		total += temp;
+
+	}
+	index = total  % tableSize;
 	return index;
 }
 
@@ -20,7 +37,7 @@ void printTable(HTable *hashTable){
         Node *cur = head;
         while(cur != NULL)
 				{
-        		printf("Hash :%d | Key :%d | Data : ", hashTable->hashFunction(hashTable->size, cur->key), cur->key);
+        		printf("Hash :%d | Key :%s | Data : ", hashTable->hashFunction(hashTable->size, cur->key), cur->key);
             hashTable->printData(cur->data);
             cur = cur->next;
         }
@@ -46,20 +63,49 @@ int main ()
   char intro;
   char userName[15];
   char password[15];
+	char option;
+	FILE *userPtr;
 
   printf("Would you like to create a new account(N) or sign in(S)? \n");
   scanf("%c", &intro);
 
-  HTable * newUser = createTable(1, hashFunction, print, delete);
+  HTable * newUser = createTable(1, hashFunction, delete, print);
+	HTable * newFile = createTable(109, hashFunction, delete, print);
 
   printf("What's your username? \n");
   scanf("%s", userName);
-  printf("%s", userName);
+	fp1 = fopen("students.bin","wb");
+
 
   printf("Enter new password \n");
   scanf("%s", password);
-  printf("%s", password);
+
+
 
   insertData(newUser, userName, password);
-    return 0;
+/*	printTable(newUser);*/
+
+	scanf("%c", &option);
+
+	printf("What would you like to do? \n");
+	printf("Add a system and password (A) \n");
+	printf("Change a password (C) \n");
+	printf("Get a password (G) \n");
+	printf("Remove a password (R) \n");
+	scanf("%c", &option);
+
+	switch(option)
+	{
+		case 'A':
+		printf("What's the system? \n");
+		scanf("%s", userName);
+
+		printf("Enter the system password \n");
+		scanf("%s", password);
+		insertData(newFile, userName, password);
+
+	}
+
+	printTable(newFile);
+  return 0;
 }

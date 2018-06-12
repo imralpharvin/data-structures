@@ -32,7 +32,11 @@ Node *createNode(int key, void *data)
 }
 void destroyTable(HTable *hashTable)
 {
-  /*int i;
+  if(hashTable == NULL)
+  {
+    return;
+  }
+  int i;
   for(i = 0; i < hashTable->size; i++)
   {
     Node * temp = hashTable->table[i];
@@ -46,7 +50,8 @@ void destroyTable(HTable *hashTable)
   }
 
 free(hashTable->table);
-  free(hashTable);*/
+hashTable->table = NULL;
+  free(hashTable);
 }
 void insertData(HTable *hashTable, int key, void *data)
 {

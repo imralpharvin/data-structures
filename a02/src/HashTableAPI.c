@@ -3,7 +3,7 @@
 #include "HashTableAPI.h"
 
 
-HTable *createTable(size_t size, int (*hashFunction)(size_t tableSize, int key),void (*destroyData)(void *data),void (*printData)(void *toBePrinted))
+HTable *createTable(size_t size, int (*hashFunction)(size_t tableSize, char key[]),void (*destroyData)(void *data),void (*printData)(void *toBePrinted))
 {
     HTable * newHTable = malloc(sizeof(HTable));
 
@@ -17,11 +17,11 @@ HTable *createTable(size_t size, int (*hashFunction)(size_t tableSize, int key),
     {
 		newHTable->table[i] = NULL;
 	  }
-
+    
 	return newHTable;
 }
 
-Node *createNode(int key, void *data)
+Node *createNode(char key[], void *data)
 {
     Node *newNode = malloc(sizeof(Node));
     newNode->next = NULL;
@@ -32,7 +32,11 @@ Node *createNode(int key, void *data)
 }
 void destroyTable(HTable *hashTable)
 {
-  /*int i;
+  if(hashTable == NULL)
+  {
+    return;
+  }
+  int i;
   for(i = 0; i < hashTable->size; i++)
   {
     Node * temp = hashTable->table[i];
@@ -46,9 +50,10 @@ void destroyTable(HTable *hashTable)
   }
 
 free(hashTable->table);
-  free(hashTable);*/
+hashTable->table = NULL;
+  free(hashTable);
 }
-void insertData(HTable *hashTable, int key, void *data)
+void insertData(HTable *hashTable, char key[], void *data)
 {
     if(hashTable != NULL)
     {
@@ -79,7 +84,7 @@ void insertData(HTable *hashTable, int key, void *data)
     }
 
 }
-void removeData(HTable *hashTable, int key)
+void removeData(HTable *hashTable, char key[])
 {
   if(hashTable != NULL)
   {
@@ -123,7 +128,7 @@ void removeData(HTable *hashTable, int key)
   }
 
 
-void *lookupData(HTable *hashTable, int key)
+void *lookupData(HTable *hashTable, char key[])
 {
 
   if(hashTable != NULL)
