@@ -17,16 +17,18 @@ HTable *createTable(size_t size, int (*hashFunction)(size_t tableSize, char key[
     {
 		newHTable->table[i] = NULL;
 	  }
-    
+
 	return newHTable;
 }
 
 Node *createNode(char key[], void *data)
 {
     Node *newNode = malloc(sizeof(Node));
+
     newNode->next = NULL;
     newNode->key = key;
     newNode->data = data;
+
 
     return newNode;
 }
@@ -55,10 +57,12 @@ hashTable->table = NULL;
 }
 void insertData(HTable *hashTable, char key[], void *data)
 {
+
     if(hashTable != NULL)
     {
         Node *newNode = createNode(key, data);
         int index = hashTable->hashFunction(hashTable->size, key);
+
 
         if(hashTable->table[index] != NULL)
         {
@@ -76,9 +80,10 @@ void insertData(HTable *hashTable, char key[], void *data)
               break;
             }
         }
-      }
+        }
         else
         {
+
           hashTable->table[index] = newNode;
         }
     }
