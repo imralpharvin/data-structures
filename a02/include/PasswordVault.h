@@ -9,10 +9,11 @@ typedef struct user_struct {
      char password[64];
 } User;
 
-void createUser(HTable * passVault);
-void signin(HTable * passVault);
+void createUser(User newUser);
+void signin(User theUser, HTable * passVault);
+void loadFile(User theUser, HTable * passVault);
+void loadTable(User theUser, HTable * passVault);
 
-void createFile(User newUser);
 
 User * openUser(char username[], char password[] , HTable * passVault);
 

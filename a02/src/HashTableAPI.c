@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #include "HashTableAPI.h"
 
@@ -99,7 +100,7 @@ void removeData(HTable *hashTable, char key[])
       {
         if(hashTable->table[index]->next == NULL)
         {
-          hashTable->destroyData(hashTable->table[index]->data);
+          /*hashTable->destroyData(hashTable->table[index]->data);*/
           hashTable->table[index] = NULL;
         }
 
@@ -107,12 +108,12 @@ void removeData(HTable *hashTable, char key[])
         {
           Node *temp = hashTable->table[index];
           Node *prev = NULL;
-          while(temp->key != key)
+          while(strcmp(temp->key, key) != 0)
           {
             prev = temp;
             temp = temp->next;
           }
-          if(temp->key == key)
+          if(strcmp(temp->key, key) == 0)
           {
             if(prev == NULL)
             {
@@ -148,7 +149,7 @@ void *lookupData(HTable *hashTable, char key[])
       Node *temp = hashTable->table[index];
       while(temp != NULL)
       {
-        if(temp->key == key)
+        if(strcmp(temp->key, key) == 0)
         {
           return temp->data;
         }
@@ -157,4 +158,32 @@ void *lookupData(HTable *hashTable, char key[])
     }
 
 return NULL;
+}
+
+void changeData(HTable *hashTable, char key[], void * data)
+{
+
+  if(hashTable != NULL)
+  {
+      int index = hashTable->hashFunction(hashTable->size, key);
+
+      if(hashTable->table[index] == NULL)
+      {
+        return;
+      }
+
+      Node *temp = hashTable->table[index];
+      while(temp != NULL)
+      {
+        if(strcmp(temp->key, key) == 0)
+        {
+          temp->data = data;
+
+          return;
+        }
+        temp = temp->next;
+      }
+    }
+
+
 }

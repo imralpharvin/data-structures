@@ -83,7 +83,7 @@ void removeData(HTable *hashTable, char key[]);
 void *lookupData(HTable *hashTable, char key[]);
 
 
-
+void changeData(HTable *hashTable, char key[], void * data);
 
 
 
