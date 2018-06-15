@@ -16,7 +16,7 @@ HTable *createTable(size_t size, int (*hashFunction)(size_t tableSize, char key[
 
     for (int i = 0; i < size; ++i)
     {
-		newHTable->table[i] = NULL;
+		  newHTable->table[i] = NULL;
 	  }
 
 	return newHTable;
@@ -33,6 +33,7 @@ Node *createNode(char key[], void *data)
 
     return newNode;
 }
+/*
 void destroyTable(HTable *hashTable)
 {
   if(hashTable == NULL)
@@ -55,14 +56,16 @@ void destroyTable(HTable *hashTable)
 free(hashTable->table);
 hashTable->table = NULL;
   free(hashTable);
-}
+}*/
 void insertData(HTable *hashTable, char key[], void *data)
 {
 
     if(hashTable != NULL)
     {
+
         Node *newNode = createNode(key, data);
         int index = hashTable->hashFunction(hashTable->size, key);
+
 
 
         if(hashTable->table[index] != NULL)
@@ -75,7 +78,7 @@ void insertData(HTable *hashTable, char key[], void *data)
               temp = temp->next;
             }
 
-            else if( temp->next == NULL)
+            else
             {
               temp->next = newNode;
               break;
@@ -93,44 +96,47 @@ void insertData(HTable *hashTable, char key[], void *data)
 void removeData(HTable *hashTable, char key[])
 {
   if(hashTable != NULL)
-  {
-      int index = hashTable->hashFunction(hashTable->size, key);
+{
+    int index = hashTable->hashFunction(hashTable->size, key);
 
-      if(hashTable->table[index] != NULL)
-      {
-        if(hashTable->table[index]->next == NULL)
+    if(hashTable->table[index] != NULL)
+    {
+
+        Node *temp = hashTable->table[index];
+        Node *prev = NULL;
+        while(strcmp(temp->key , key) != 0)
         {
-          /*hashTable->destroyData(hashTable->table[index]->data);*/
-          hashTable->table[index] = NULL;
+          prev = temp;
+          temp = temp->next;
         }
-
-        else
+        if(strcmp(temp->key , key) == 0)
         {
-          Node *temp = hashTable->table[index];
-          Node *prev = NULL;
-          while(strcmp(temp->key, key) != 0)
+          if(prev == NULL)
           {
-            prev = temp;
-            temp = temp->next;
-          }
-          if(strcmp(temp->key, key) == 0)
-          {
-            if(prev == NULL)
+            if(temp->next == NULL)
+            {
+              /*hashTable->destroyData(temp->data);*/
+              hashTable->table[index] = NULL;
+            }
+
+            else
             {
               hashTable->table[index] = hashTable->table[index]->next;
-              hashTable->destroyData(temp->data);
+              /*hashTable->destroyData(temp->data);*/
               hashTable->table[index]->next = temp->next;
               free(temp);
             }
-            else
-            {
-              prev->next = temp->next;
-              hashTable->destroyData(temp->data);
-            }
+          }
+          else
+          {
+            prev->next = temp->next;
+            /*hashTable->destroyData(temp->data);*/
           }
         }
-      }
+
     }
+  }
+
   }
 
 

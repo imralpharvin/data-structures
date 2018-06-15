@@ -70,7 +70,7 @@ void insertData(HTable *hashTable, int key, void *data)
               temp = temp->next;
             }
 
-            else if( temp->next == NULL)
+            else
             {
               temp->next = newNode;
               break;
@@ -92,14 +92,7 @@ void removeData(HTable *hashTable, int key)
 
       if(hashTable->table[index] != NULL)
       {
-        if(hashTable->table[index]->next == NULL)
-        {
-          hashTable->destroyData(hashTable->table[index]->data);
-          hashTable->table[index] = NULL;
-        }
 
-        else
-        {
           Node *temp = hashTable->table[index];
           Node *prev = NULL;
           while(temp->key != key)
@@ -111,10 +104,19 @@ void removeData(HTable *hashTable, int key)
           {
             if(prev == NULL)
             {
-              hashTable->table[index] = hashTable->table[index]->next;
-              hashTable->destroyData(temp->data);
-              hashTable->table[index]->next = temp->next;
-              free(temp);
+              if(temp->next == NULL)
+              {
+                hashTable->destroyData(temp->data);
+                hashTable->table[index] = NULL;
+              }
+
+              else
+              {
+                hashTable->table[index] = hashTable->table[index]->next;
+                hashTable->destroyData(temp->data);
+                hashTable->table[index]->next = temp->next;
+                free(temp);
+              }
             }
             else
             {
@@ -122,7 +124,7 @@ void removeData(HTable *hashTable, int key)
               hashTable->destroyData(temp->data);
             }
           }
-        }
+
       }
     }
   }

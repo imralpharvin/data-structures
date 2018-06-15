@@ -18,6 +18,7 @@ int hashFunction(size_t tableSize, char key[]) {
 
 	}
 	index = total  % tableSize;
+
 	return index;
 }
 
@@ -50,37 +51,6 @@ void delete(void *toBeDeleted)
   free(toBeDeleted);
 }
 
-/*int main()
-{
-	HTable * passVault = createVault(113, hashFunction, delete, print);
-
-	createUser(passVault);
-
-	User newUser;
-  printf("Enter username: \n");
-  fgets(newUser.username, 64, stdin);
-  newUser.username[strlen(newUser.username)-1] = '\0';
-
-  printf("Enter password: \n");
-  fgets(newUser.password, 64, stdin);
-  newUser.password[strlen(newUser.password)-1] = '\0';
-char username[64];
-char password[64];
-  printf("Enter username: \n");
-  fgets(username, 64, stdin);
-  username[strlen(username)-1] = '\0';
-  printf("Enter password: \n");
-  fgets(password, 64, stdin);
-  password[strlen(password)-1] = '\0';
-  insertData(passVault, newUser.username, newUser.password);
-  insertData(passVault, username, password);
-
-	printTable(passVault);
-	createUser(passVault);
-	printTable(passVault);
-
-	return 0;
-}*/
 int main ()
 {
 
@@ -89,101 +59,156 @@ int main ()
 
 	HTable * passVault = createVault(109, hashFunction, delete, print);
 
-  printf("(N) Create a new account\n(S) Sign in? \n");
-  scanf("%c", &intro);
+	printf("\n*********************** PASSWORD VAULT ***********************\n");
+  printf("\n(N) Create a new account\n(S) Sign in?\n\n> ");
+	scanf("%c", &intro);
+	/*fgets(intro, 3, stdin);*/
+
+	/*intro[strlen(intro)-1] = '\0';*/
+/*printf("%s", intro);*/
+	/*intro = getc(stdin);*/
+	/*intro = getchar();*/
+  /*scanf("%c", &intro);*/
 
 	User theUser;
 	switch(intro)
 	{
 		/*Ask for username and password*/
 		case'N':
-		printf("Username: ");
-		scanf("%s", theUser.username);
-		printf("Password: ");
-		scanf("%s", theUser.password);
+		printf("\n[Username]: ");
+		/*fgets(theUser.username, 64, stdin);*/
+		/*theUser.username[strlen(theUser.username)-1] = '\0';*/
+		scanf("%63s", theUser.username);
+		printf("[Password]: ");
+		/*fgets(theUser.password, 64, stdin);*/
+		/*	theUser.password[strlen(theUser.password)-1] = '\0';*/
+		scanf("%63s", theUser.password);
 		createUser(theUser);
 		loadFile(theUser,passVault);
 		break;
 
 		case'S':
-		printf("Username: ");
-		scanf("%s", theUser.username);
-		printf("Password: ");
-		scanf("%s", theUser.password);
+		printf("\n[Username]: ");
+		/*fgets(theUser.username, 64, stdin);*/
+		scanf("%63s", theUser.username);
+		printf("[Password]: ");
+		/*fgets(theUser.password, 64, stdin);*/
+		scanf("%63s", theUser.password);
 		signin(theUser, passVault);
+		printf("\n> [Logged in successfully]\n\n");
 		printTable(passVault);
 
 		break;
 	}
 
-	scanf("%c", &option);
+while(option != '2')
+{
 
-
-	fflush(stdin);
-	printf("Menu \n");
-	printf("(A) Add a system and password \n");
-	printf("(C) Change a password \n");
-	printf("(G) Get a password \n");
-	printf("(R) Remove a password \n\n");
-	printf("(S) User settings \n");
+	printf("\n*********************** M E N U ***********************\n\n");
+	printVault(theUser, passVault);
+	printf("\n(A) Add a system and password \n");
+	printf("(B) Change a password \n");
+	printf("(C) Get a password \n");
+	printf("(D) Remove a password \n\n");
+	printf("(1) Change your password vault password \n");
+	printf("(2) Logout\n\n> ");
+	getchar();
 	scanf("%c", &option);
 
 
 	switch(option)
 	{
 		case 'A':
-		printf("What's the system? \n");
+		printf("\n*********************** ADD NEW SYSTEM AND PASSWORD ***********************\n\n");
+		printf("\n[Enter new system]: ");
 		User newSystem;
-		scanf("%s", newSystem.username);
-		printf("Enter the system password \n");
-		scanf("%s", newSystem.password);
+		User * tempSystem = malloc(sizeof(User));
+		/*getchar();*/
 
-		insertData(passVault, newSystem.username, newSystem.password);
-		FILE * fptr;
-		char filename[64];
-		char pathname[64] = "bin/";
+		scanf("%63s", newSystem.username);
+		/*fgets(newSystem.username, 64, stdin);*/
+		/*newSystem.username[strlen(newSystem.username)-1] = '\0';*/
 
-		strcpy(filename, theUser.username);
-		strcat(pathname, filename);
-		strcat(pathname, ".bin");
-		fptr = fopen(pathname,"rb+");
-		fseek(fptr, 0, SEEK_END);
+		/*scanf("%s", );*/
+		printf("[Enter system password]: ");
 
-		fwrite(&newSystem, sizeof(User), 1, fptr);
+		/*fgets(newSystem.password, 64, stdin);*/
+		/*newSystem.password[strlen(newSystem.password)-1] = '\0';*/
+		scanf("%63s", newSystem.password);
 
-		fclose(fptr);
+		strcpy(tempSystem->username, newSystem.username);
+		strcpy(tempSystem->password, newSystem.password);
+
+		insertData(passVault, tempSystem->username, tempSystem->password);
+		printVault(theUser, passVault);
+
+		loadTable(theUser, passVault);
+		printf("> [Password added successfully]\n");
+
 		break;
 
-		case 'C':
-		printf("What's the system? \n");
+		case 'B':
+		printf("\n*********************** CHANGE A SYSTEM PASSWORD ***********************\n\n");
+		printVault(theUser, passVault);
+		printf("\n[Enter system]: ");
 		User changeSystem;
-		scanf("%s", changeSystem.username);
-		printf("Enter new system password \n");
-		scanf("%s", changeSystem.password);
+
+		/*fgets(changeSystem.username, 64, stdin);*/
+		scanf("%63s", changeSystem.username);
+		printf("[Enter new system password]: ");
+		/*fgets(changeSystem.password, 64, stdin);*/
+		scanf("%63s", changeSystem.password);
 
 		changeData(passVault, changeSystem.username, changeSystem.password);
 		loadTable(theUser, passVault);
-
-		case 'G':
-		printf("What's the system? \n");
-		User getSystem;
-		scanf("%s", getSystem.username);
-		strcpy(getSystem.password, lookupData(passVault, getSystem.username));
-		printf("Password is: %s\n", getSystem.password);
-
-		case 'R':
-		printf("What's the system? \n");
-		User removeSystem;
-		scanf("%s", removeSystem.username);
-		removeData(passVault, removeSystem.username);
-		printTable(passVault);
-		loadTable(theUser, passVault);
-
+		printf("\n> [Password changed successfully]\n");
 		break;
+
+		case 'C':
+		printf("\n*********************** GET A SYSTEM PASSWORD ***********************\n\n");
+		printVault(theUser, passVault);
+		printf("\n[Enter system]: ");
+		User getSystem;
+		/*fgets(getSystem.username, 64, stdin);*/
+		scanf("%63s", getSystem.username);
+		strcpy(getSystem.password, lookupData(passVault, getSystem.username));
+		printf("[Your Password is]: %s\n", getSystem.password);
+		break;
+
+		case 'D':
+		printf("\n*********************** REMOVE A SYSTEM PASSWORD ***********************\n\n");
+		printVault(theUser, passVault);
+		printf("\n[Enter system]: ");
+		User removeSystem;
+		/*fgets(removeSystem.username, 64, stdin);*/
+		scanf("%63s", removeSystem.username);
+		removeData(passVault, removeSystem.username);
+		/*printTable(passVault);*/
+		loadTable(theUser, passVault);
+		printf("\n> [System and password removed successfully]\n");
+		break;
+
+		case '1':
+		printf("\n*********************** CHANGE YOUR VAULT PASSWORD ***********************\n\n");
+		printf("[Your username]: %s\n", theUser.username);
+		printf("[Enter new vault password]: ");
+		/*fgets(theUser.password, 64, stdin);*/
+		scanf("%63s", theUser.password);
+
+		changeData(passVault, theUser.username, theUser.password);
+		loadTable(theUser, passVault);
+		printf("> [Vault Password updated successfully]\n");
+		break;
+
+		case '2':
+		printf("> [Logout successful]\n");
+		printf("\n*********************** THANK YOU FOR USING PASSWORD VAULT ***********************\n\n");
+		exit(-1);
+		break;
+
 
 	}
 
-	printf("End\n");
-	printTable(passVault);
+}
   return 0;
 }

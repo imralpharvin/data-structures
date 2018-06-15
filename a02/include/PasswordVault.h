@@ -13,9 +13,7 @@ void createUser(User newUser);
 void signin(User theUser, HTable * passVault);
 void loadFile(User theUser, HTable * passVault);
 void loadTable(User theUser, HTable * passVault);
-
-
-User * openUser(char username[], char password[] , HTable * passVault);
+void printVault(User theUser, HTable * passVault);
 
 HTable *createVault(size_t size, int (*hashFunction)(size_t tableSize, char key[]),void (*destroyData)(void *data),void (*printData)(void *toBePrinted));
 
