@@ -1,32 +1,11 @@
 #include <stdio.h>
 
-#include"HashTableAPI.h"
-
-int print(void *toBePrinted)
-{
-  int number;
-
-  number = *((int *) toBePrinted);
-  printf("%d\n", number);
-}
-
-void print(void *toBePrinted)
-{
-  int number;
-
-  number = *((int *) toBePrinted);
-  printf("%d\n", number);
-}
-
-void delete(void *toBeDeleted)
-{
-  free(toBeDeleted);
-}
+#include"heap.h"
 
 int main ()
 {
 
-    printf("*** Test #1: createTable ***\n");
+    printf("*** Test #1: createHeap ***\n");
     printf("Expected:\nThe table is empty\n");
     HTable *newHTable = initializeQueue(2, deleteCar, compareCars);
     printf("Received:\n");
