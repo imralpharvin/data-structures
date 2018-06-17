@@ -123,7 +123,7 @@ void removeData(HTable *hashTable, char key[])
             {
               hashTable->table[index] = hashTable->table[index]->next;
               /*hashTable->destroyData(temp->data);*/
-              hashTable->table[index]->next = temp->next;
+              /*hashTable->table[index]->next = temp->next;*/
               free(temp);
             }
           }

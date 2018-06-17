@@ -12,7 +12,7 @@
 #include <stdlib.h>
 
 /**
-*Node of the hash table.
+*Node of the hash table. 
 **/
 typedef struct Node
 {
@@ -29,8 +29,8 @@ typedef struct HTable
 	size_t size; ///< number that represents the size of the hash table
 	Node **table; ///< array that contains all of the table nodes
 	void (*destroyData)(void *data); ///< function pointer to a function to delete a single piece of data from the hash table
-	int (*hashFunction)(size_t tableSize, int key); ///< function pointer to a function to hash the data
-  void (*printData)(void *toBePrinted); ///< function pointer to a function that prints out a data element of the table
+	int (*hashFunction)(size_t tableSize, int key); ///< function pointer to a function to hash the data 
+    void (*printData)(void *toBePrinted); ///< function pointer to a function that prints out a data element of the table
 }HTable;
 
 
@@ -56,7 +56,7 @@ Node *createNode(int key, void *data);
 *@pre Hash Table must exist.
 *@param hashTable pointer to hash table containing elements of data
 **/
-void destroyTable(HTable *hashTable);
+void destroyTable(HTable *hashTable);  
 
 /**Inserts a Node in the hash table.
 *@pre hashTable type must exist and have data allocated to it
@@ -66,7 +66,7 @@ void destroyTable(HTable *hashTable);
 **/
 void insertData(HTable *hashTable, int key, void *data);
 
-/**Function to remove a node from the hash table
+/**Function to remove a node from the hash table 
  *@pre Hash table must exist and have memory allocated to it
  *@post Node at key will be removed from the hash table if it exists.
  *@param hashTable pointer to the hash table struct
