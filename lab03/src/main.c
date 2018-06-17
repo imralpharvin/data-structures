@@ -28,6 +28,10 @@ int main ()
     int * ptr6 = malloc(sizeof(int));
     int * ptr7 = malloc(sizeof(int));
     int * ptr8 = malloc(sizeof(int));
+    int * ptr9 = malloc(sizeof(int));
+    int * ptr10 = malloc(sizeof(int));
+
+
 
 
     *ptr1 = 1;
@@ -38,6 +42,8 @@ int main ()
     *ptr6 = 10;
     *ptr7 = 8;
     *ptr8 = 9;
+    *ptr9 = 89;
+    *ptr10 = 95;
 
 
     printf("*** Test #1: createHeapNode ***\n");
@@ -51,7 +57,7 @@ int main ()
 
     printf("*** Test #2: createHeap ***\n");
     printf("Expected:\n\n");
-    Heap * newHeap = createHeap(5, 1, delete, print , compare);
+    Heap * newHeap = createHeap(5, 0, delete, print , compare);
     printf("Received:\n\n");
     printf("   ***PASS***   \n\n");
 
@@ -77,7 +83,7 @@ int main ()
 
     printf("*** Test #2: deleteMinOrMax ***\n");
     printf("Expected:\n\n");
-    deleteMinOrMax(newHeap);
+    /*deleteMinOrMax(newHeap);
     printHeap(newHeap);
 
     deleteMinOrMax(newHeap);
@@ -85,11 +91,43 @@ int main ()
 
     deleteMinOrMax(newHeap);
 
+    printHeap(newHeap);*/
+   changeHeapType(newHeap);
+    printHeap(newHeap);
+    changeHeapType(newHeap);
+     printHeap(newHeap);
+     insertHeapNode(newHeap, ptr10);
+     printHeap(newHeap);
+     insertHeapNode(newHeap, ptr8);
+     printHeap(newHeap);
+     changeHeapType(newHeap);
+      printHeap(newHeap);
+      changeHeapType(newHeap);
+       printHeap(newHeap);
+       changeHeapType(newHeap);
+        printHeap(newHeap);
+        insertHeapNode(newHeap, ptr9);
+        printHeap(newHeap);
+        changeHeapType(newHeap);
+         printHeap(newHeap);
+         changeHeapType(newHeap);
+          printHeap(newHeap);
+    /*changeHeapType(newHeap);
+    printHeap(newHeap);
+    changeHeapType(newHeap);
+    printHeap(newHeap);
+    changeHeapType(newHeap);
+    printHeap(newHeap);*/
+    /*deleteHeap(newHeap);
+    printf("After deleting\n");
+    printHeap(newHeap);*/
+
+    /*insertHeapNode(newHeap, ptr8);
+
     printHeap(newHeap);
 
-    insertHeapNode(newHeap, ptr8);
-
-    printHeap(newHeap);
+    deleteMinOrMax(newHeap);
+    printHeap(newHeap);*/
 
     printf("Received:\n\n");
     printf("   ***PASS***   \n\n");

@@ -8,13 +8,6 @@
 
 Heap *createHeap(size_t initialSize, HEAP_TYPE htype, void (*destroyDataFP)(void *data),void (*printNodeFP)(void *toBePrinted),int (*compareFP)(const void *first, const void *second))
 {
-  /*Create and allocate space for a new Heap of initialSize
-     set heap type to htype
-     set delete function to the destrpuDataFP function pointer parameter
-     set compare function to the compareFP function parameter
-     set printNode function to the printNode function parameter
-     return the new Heap*/
-
   Heap * newHeap = malloc(sizeof(Heap));
   newHeap->heap = NULL;
   newHeap->lastPosition = newHeap->heap;
@@ -29,10 +22,6 @@ Heap *createHeap(size_t initialSize, HEAP_TYPE htype, void (*destroyDataFP)(void
 
 Node *createHeapNode(void *data)
 {
-  /*create a pointer to a new Node
-    set new nodes left, right and parent pointers to NULL
-    set the node's data to the parameter data value
-    return the pointer to the new Node*/
   Node *newNode = malloc(sizeof(Node));
   newNode->left = NULL;
   newNode->right = NULL;
@@ -44,11 +33,6 @@ Node *createHeapNode(void *data)
 
 void insertHeapNode(Heap *heap, void *data)
 {
-/*
-  create a node from the data
-      locate the next position in the heap (the left most position with no node)
-      add the new node to the located position
-      reheapify the heap to maintain the heap property*/
   printf("Heap Size Before: %d\n", heap->size);
   printf("Data to insert: " );
   print((int*)data);
@@ -122,14 +106,13 @@ void insertHeapNode(Heap *heap, void *data)
     printf("Data of child's parent: ");
     print(newNode->parent->data);
 
-    /*insertNode->data = newNode->data;*/
-
-    /*newNode->parent = parentNode;*/
-    /*print(parentNode->data);*/
-
     heap->size ++;
     heap->lastPosition = newNode;
+    printf("lastPosition: ");
+    print(heap->lastPosition->data);
     heapifyUp(heap, newNode);
+    printf("lastPosition: ");
+    print(heap->lastPosition->data);
 
   }
   printf("\nHeap Size After: %d\n\n", heap->size);
@@ -140,6 +123,17 @@ void insertHeapNode(Heap *heap, void *data)
 
 void deleteMinOrMax(Heap *heap)
 {
+
+  if(heap->size == 1)
+  {
+    heap->heap->data = NULL;
+    heap->heap = NULL;
+    heap->lastPosition = NULL;
+    heap->size --;
+
+  }
+  else
+  {
   printf("Heap Before: ");
   print(heap->heap->data);
 
@@ -207,7 +201,7 @@ void deleteMinOrMax(Heap *heap)
 
   heapifyDown(heap, heap->heap);
 
-
+}
 
   /*if(heap->)
 
@@ -221,12 +215,138 @@ void *getMinOrMax(Heap *heap)
 
 void changeHeapType(Heap *heap)
 {
+  int j;
+  if(heap->type == 0)
+  {
+    heap->type =1 ;
+  }
 
+  else if(heap->type == 1)
+  {
+    heap->type = 0 ;
+  }
+
+  for(j = heap->size; j > 0; j--)
+  {
+    if( j == 1)
+    {
+      Node * printNode = heap->heap;
+      printf("Position 1: ");
+      print(printNode->data);
+    }
+    else
+    {
+      int heapLevel = 0;
+      int heapLevelSum = 0;
+      int heapBottom = 0;
+      int i;
+      int j1 = j -1;
+      while(heapLevelSum + pow(2 , heapLevel) <= j1)
+      {
+        heapLevelSum = heapLevelSum + pow(2 , heapLevel);
+        heapLevel++;
+      }
+
+      heapBottom = j1 - heapLevelSum;
+      Node * exchangeNode = heap->heap;
+
+
+      int heapBottomSum = pow(2 , heapLevel);
+      /*printf("Level: %d, Size: %d [%d + %d], Next:%d\n", heapLevel, j1, heapLevelSum, heapBottom ,heapBottomSum);*/
+      int mid = heapBottomSum/2;
+
+      for(i = 0; i < heapLevel; i++)
+      {
+        if(heapBottom < mid)
+        {
+          exchangeNode = exchangeNode->left;
+        }
+        else
+        {
+          exchangeNode = exchangeNode->right;
+          heapBottom = heapBottom -mid;
+
+        }
+          mid = mid/2;
+      }
+
+      /*void * temp = heap->heap->data;
+      heap->heap->data = exchangeNode->data;
+      exchangeNode->data = temp;*/
+      print(exchangeNode->data);
+      heapifyUp(heap, exchangeNode);
+      printf("Here1\n");
+      printf("Position %d: \n", j);
+
+    }
+  }
+
+  for(j = 1; j <= heap->size; j++)
+  {
+    if( j == 1)
+    {
+      Node * printNode = heap->heap;
+      printf("Position 1: ");
+      print(printNode->data);
+    }
+    else
+    {
+      int heapLevel = 0;
+      int heapLevelSum = 0;
+      int heapBottom = 0;
+      int i;
+      int j1 = j -1;
+      while(heapLevelSum + pow(2 , heapLevel) <= j1)
+      {
+        heapLevelSum = heapLevelSum + pow(2 , heapLevel);
+        heapLevel++;
+      }
+
+      heapBottom = j1 - heapLevelSum;
+      Node * exchangeNode = heap->heap;
+
+
+      int heapBottomSum = pow(2 , heapLevel);
+      /*printf("Level: %d, Size: %d [%d + %d], Next:%d\n", heapLevel, j1, heapLevelSum, heapBottom ,heapBottomSum);*/
+      int mid = heapBottomSum/2;
+
+      for(i = 0; i < heapLevel; i++)
+      {
+        if(heapBottom < mid)
+        {
+          exchangeNode = exchangeNode->left;
+        }
+        else
+        {
+          exchangeNode = exchangeNode->right;
+          heapBottom = heapBottom -mid;
+
+        }
+          mid = mid/2;
+      }
+
+      /*void * temp = heap->heap->data;
+      heap->heap->data = exchangeNode->data;
+      exchangeNode->data = temp;*/
+      print(exchangeNode->data);
+      heapifyDown(heap, exchangeNode);
+      printf("Here1\n");
+      printf("Position %d: \n", j);
+
+    }
+  }
 }
 
 void deleteHeap(Heap *heap)
 {
 
+  while(heap->size > 0)
+  {
+    printf("heap->size: %d", heap->size);
+
+    deleteMinOrMax(heap);
+    printHeap(heap);
+  }
 }
 
 void heapifyUp(Heap * heap, Node * newNode)
@@ -235,30 +355,55 @@ void heapifyUp(Heap * heap, Node * newNode)
   {
   Node * parentNode2 = newNode->parent;
 
-
-  while(parentNode2 != NULL && getData(newNode->data) > getData(parentNode2->data))
+  if(heap->type == 1)
   {
-    printf("\nBefore\nNewnode:");
-    print(newNode->data);
-    printf("Parentnode:");
-    print(parentNode2->data);
-
-    void * temp = newNode->data;
-    newNode->data = parentNode2->data;
-    parentNode2->data = temp;
-
-
-    newNode = parentNode2;
-    parentNode2 = parentNode2->parent;
-    printf("\nAfter\nNewnode:");
-    print(newNode->data);
-    printf("Parentnode:");
-    if(parentNode2 != NULL)
+    while(parentNode2 != NULL && getData(newNode->data) > getData(parentNode2->data))
     {
-    print(parentNode2->data);
+      printf("\nBefore\nNewnode:");
+      print(newNode->data);
+      printf("Parentnode:");
+      print(parentNode2->data);
+
+      void * temp = newNode->data;
+      newNode->data = parentNode2->data;
+      parentNode2->data = temp;
+
+
+      newNode = parentNode2;
+      parentNode2 = parentNode2->parent;
+      printf("\nAfter\nNewnode:");
+      print(newNode->data);
+      printf("Parentnode:");
+      if(parentNode2 != NULL)
+      {
+      print(parentNode2->data);
+      }
     }
+  }
+  else if(heap->type == 0)
+  {
+    while(parentNode2 != NULL && getData(newNode->data) < getData(parentNode2->data))
+    {
+      printf("\nBefore\nNewnode:");
+      print(newNode->data);
+      printf("Parentnode:");
+      print(parentNode2->data);
+
+      void * temp = newNode->data;
+      newNode->data = parentNode2->data;
+      parentNode2->data = temp;
 
 
+      newNode = parentNode2;
+      parentNode2 = parentNode2->parent;
+      printf("\nAfter\nNewnode:");
+      print(newNode->data);
+      printf("Parentnode:");
+      if(parentNode2 != NULL)
+      {
+      print(parentNode2->data);
+      }
+    }
   }
 }
 
@@ -277,46 +422,130 @@ void heapifyDown(Heap * heap, Node * newNode)
   if(heap->size > 1)
   {
   Node * tempNode = newNode;
+  printf("tempNode: ");
+  print(tempNode->data);
 
-    while(tempNode->right != NULL && tempNode->left != NULL)
+    if(heap->type == 1)
     {
-      if(tempNode->right != NULL)
+      while(tempNode->right != NULL || tempNode->left != NULL)
       {
-        if(getData(tempNode->right->data) > getData(tempNode->left->data))
-        {
-          if(getData(tempNode->right->data) > getData(tempNode->data))
-          {
-            void * temp = tempNode->right->data;
-            tempNode->right->data = tempNode->data;
-            tempNode->data = temp;
+        /*printf("tempNode: ");
+        print(tempNode->data);*/
 
-            tempNode = tempNode->right;
+        if(tempNode->right != NULL)
+        {
+          if(getData(tempNode->right->data) > getData(tempNode->left->data))
+          {
+            if(getData(tempNode->right->data) > getData(tempNode->data))
+            {
+              void * temp = tempNode->right->data;
+              tempNode->right->data = tempNode->data;
+              tempNode->data = temp;
+              printf("here1\n");
+              tempNode = tempNode->right;
+              if(tempNode->right == NULL)
+              {printf("right is NULL\n");}
+              if(tempNode->right != NULL)
+              {printf("right is NOT NULL\n");}
+            }
+            else
+            {
+              break;
+            }
+          }
+          else
+          {
+            printf("Here\n");
+            if(getData(tempNode->left->data) > getData(tempNode->data))
+            {
+              void * temp = tempNode->left->data;
+              tempNode->left->data = tempNode->data;
+              tempNode->data = temp;
+              printf("here2\n");
+              tempNode = tempNode->left;
+            }
+            else
+            {
+              break;
+            }
           }
         }
         else
         {
+          /*printf("Here\n");*/
+
           if(getData(tempNode->left->data) > getData(tempNode->data))
           {
             void * temp = tempNode->left->data;
             tempNode->left->data = tempNode->data;
             tempNode->data = temp;
-
+            printf("here3\n");
             tempNode = tempNode->left;
+          }
+          else
+          {
+            break;
+          }
+        }
+
+      }
+    }
+
+    else if(heap->type == 0)
+    {
+      while(tempNode->right != NULL || tempNode->left != NULL)
+      {
+        if(tempNode->right != NULL)
+        {
+          printf("tempNode->right != NULL");
+          if(getData(tempNode->right->data) < getData(tempNode->left->data))
+          {
+            if(getData(tempNode->right->data) < getData(tempNode->data))
+            {
+              void * temp = tempNode->right->data;
+              tempNode->right->data = tempNode->data;
+              tempNode->data = temp;
+              printf("Here1\n");
+              tempNode = tempNode->right;
+            }
+            else
+            {
+              break;
+            }
+          }
+          else
+          {
+            if(getData(tempNode->left->data) < getData(tempNode->data))
+            {
+              void * temp = tempNode->left->data;
+              tempNode->left->data = tempNode->data;
+              tempNode->data = temp;
+              printf("Here2\n");
+              tempNode = tempNode->left;
+            }
+            else
+            {
+              break;
+            }
+          }
+        }
+        else
+        {
+          printf("tempNode->right == NULL");
+          if(getData(tempNode->left->data) < getData(tempNode->data))
+          {
+            void * temp = tempNode->left->data;
+            tempNode->left->data = tempNode->data;
+            tempNode->data = temp;
+            printf("Here3\n");
+            tempNode = tempNode->left;
+            }
+          else
+          {
+              break;
           }
         }
       }
-      else
-      {
-        if(getData(tempNode->left->data) > getData(tempNode->data))
-        {
-          void * temp = tempNode->left->data;
-          tempNode->left->data = tempNode->data;
-          tempNode->data = temp;
-
-          tempNode = tempNode->left;
-          }
-      }
-
     }
   }
 
