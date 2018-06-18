@@ -144,13 +144,13 @@ void deleteMinOrMax(Heap *heap)
   printf("Heap After: ");
   print(heap->heap->data);
 
-  if(getData(heap->lastPosition->parent->left->data) == getData(heap->lastPosition->data) )
+  if(heap->compare(heap->lastPosition->parent->left->data, heap->lastPosition->data) == 0  )
   {
     printf("left\n");
     heap->lastPosition->parent->left = NULL;
   }
 
-  else if(getData(heap->lastPosition->parent->right->data) == getData(heap->lastPosition->data))
+  else if(heap->compare(heap->lastPosition->parent->right->data, heap->lastPosition->data) == 0 )
   {
     printf("right\n");
     heap->lastPosition->parent->right = NULL;
@@ -357,7 +357,7 @@ void heapifyUp(Heap * heap, Node * newNode)
 
   if(heap->type == 1)
   {
-    while(parentNode2 != NULL && getData(newNode->data) > getData(parentNode2->data))
+    while(parentNode2 != NULL && heap->compare(newNode->data,parentNode2->data) > 0)
     {
       printf("\nBefore\nNewnode:");
       print(newNode->data);
@@ -382,7 +382,7 @@ void heapifyUp(Heap * heap, Node * newNode)
   }
   else if(heap->type == 0)
   {
-    while(parentNode2 != NULL && getData(newNode->data) < getData(parentNode2->data))
+    while(parentNode2 != NULL && heap->compare(newNode->data,parentNode2->data) < 0)
     {
       printf("\nBefore\nNewnode:");
       print(newNode->data);
@@ -434,9 +434,9 @@ void heapifyDown(Heap * heap, Node * newNode)
 
         if(tempNode->right != NULL)
         {
-          if(getData(tempNode->right->data) > getData(tempNode->left->data))
+          if(heap->compare(tempNode->right->data, tempNode->left->data) > 0)
           {
-            if(getData(tempNode->right->data) > getData(tempNode->data))
+            if(heap->compare(tempNode->right->data, tempNode->data) > 0)
             {
               void * temp = tempNode->right->data;
               tempNode->right->data = tempNode->data;
@@ -456,7 +456,7 @@ void heapifyDown(Heap * heap, Node * newNode)
           else
           {
             printf("Here\n");
-            if(getData(tempNode->left->data) > getData(tempNode->data))
+            if(heap->compare(tempNode->left->data, tempNode->data) > 0)
             {
               void * temp = tempNode->left->data;
               tempNode->left->data = tempNode->data;
@@ -474,7 +474,7 @@ void heapifyDown(Heap * heap, Node * newNode)
         {
           /*printf("Here\n");*/
 
-          if(getData(tempNode->left->data) > getData(tempNode->data))
+          if(heap->compare(tempNode->left->data, tempNode->data) > 0)
           {
             void * temp = tempNode->left->data;
             tempNode->left->data = tempNode->data;
@@ -498,9 +498,9 @@ void heapifyDown(Heap * heap, Node * newNode)
         if(tempNode->right != NULL)
         {
           printf("tempNode->right != NULL");
-          if(getData(tempNode->right->data) < getData(tempNode->left->data))
+          if(heap->compare(tempNode->right->data, tempNode->left->data) < 0)
           {
-            if(getData(tempNode->right->data) < getData(tempNode->data))
+            if(heap->compare(tempNode->right->data, tempNode->data) < 0)
             {
               void * temp = tempNode->right->data;
               tempNode->right->data = tempNode->data;
@@ -515,7 +515,7 @@ void heapifyDown(Heap * heap, Node * newNode)
           }
           else
           {
-            if(getData(tempNode->left->data) < getData(tempNode->data))
+            if(heap->compare(tempNode->left->data, tempNode->data) < 0)
             {
               void * temp = tempNode->left->data;
               tempNode->left->data = tempNode->data;
@@ -532,7 +532,7 @@ void heapifyDown(Heap * heap, Node * newNode)
         else
         {
           printf("tempNode->right == NULL");
-          if(getData(tempNode->left->data) < getData(tempNode->data))
+          if(heap->compare(tempNode->left->data, tempNode->data) < 0)
           {
             void * temp = tempNode->left->data;
             tempNode->left->data = tempNode->data;

@@ -1,46 +1,84 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include"heaphelper.h"
 
-#include"HashTableAPI.h"
+#include"heap.h"
+#include"priorityQueueADT.h"
 
-int print(void *toBePrinted)
-{
-  int number;
+#include"emergency.h"
 
-  number = *((int *) toBePrinted);
-  printf("%d\n", number);
-}
 
-void print(void *toBePrinted)
-{
-  int number;
 
-  number = *((int *) toBePrinted);
-  printf("%d\n", number);
-}
 
-void delete(void *toBeDeleted)
-{
-  free(toBeDeleted);
-}
-
-int main ()
+int main (int argc, char *argv[])
 {
 
-    printf("*** Test #1: createTable ***\n");
-    printf("Expected:\nThe table is empty\n");
-    HTable *newHTable = initializeQueue(2, deleteCar, compareCars);
-    printf("Received:\n");
-    printQueue(carQueue);
-    printf("   ***PASS***   \n\n");
+  PQueue * arrivingPatients = createPriorityQueue(5, 0, delete, printPatient, compareArrivalTime);
+  PQueue * waitingPatients = createPriorityQueue(5, 0, delete, printPatient, comparePriority);
 
-    printf("*** Test #2: enQueue ***\n");
-    printf("Expected:\nN L 2\nS R 3\nW F 5\n");
-    enQueue(carQueue, a);
-    enQueue(carQueue, b);
-    enQueue(carQueue, c);
-    printf("Received:\n");
-    printQueue(carQueue);
-    printf("   ***PASS***   \n\n");
+  loadPatients(argv[1], arrivingPatients);
 
-    return 0;
+  int counter = 0;
+  int doctorTimer = 0;
+  Patient * currentPatient = NULL;
+
+  while(arrivingPatients->front != NULL || waitingPatients->front != NULL || doctorTimer != 0)
+  {
+    printf("[Counter Before: %d]\n", counter);
+    while (arrivingPatients->front != NULL && counter == getArrivalTime(arrivingPatients->front->data))
+    {
+      Patient * arrivedPatient = getFront(arrivingPatients);
+
+      printf("arrivedPatient: ");
+      printPatient(arrivedPatient);
+      deQueue(arrivingPatients);
+      enQueue(waitingPatients, arrivedPatient);
+    }
+    printf("arrivingPatients: \n");
+    printPriorityQueue(arrivingPatients);
+    printf("waitingPatients: \n");
+    printPriorityQueue(waitingPatients);
+
+
+
+    if(doctorTimer <= 0 && waitingPatients->front != NULL)
+    {
+      Patient * currentPatient = getFront(waitingPatients);
+      printf("currentPatient: ");
+      printPatient(currentPatient);
+      deQueue(waitingPatients);
+      doctorTimer = 5;
+    }
+
+    counter ++;
+    doctorTimer --;
+
+    printf("Counter After: %d\n", counter);
+    printPriorityQueue(waitingPatients);
+    if(currentPatient != NULL)
+    {
+      printf("currentPatient: ");
+      printPatient(currentPatient);
+    }
+
+  }
+
+  printPriorityQueue(waitingPatients);
+
+  /*while(arrivingPatients->front != NULL || currentPatient != NULL)
+  {
+    while (arrivingPatients->front != NULL && counter == getWaitingTime(arrivingPatients->front->data))
+    {
+      Patient * arrivedPatient = getFront(arrivingPatients);
+      deQueue(arrivingPatients);
+      enQueue(waitingPatients, arrivedPatient);
+
+      counter ++;
+    }
+
+  }*/
+
+
+  return 0;
 }
