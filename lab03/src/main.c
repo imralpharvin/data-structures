@@ -31,9 +31,6 @@ int main ()
     int * ptr9 = malloc(sizeof(int));
     int * ptr10 = malloc(sizeof(int));
 
-
-
-
     *ptr1 = 1;
     *ptr2 = 2;
     *ptr3 = 3;

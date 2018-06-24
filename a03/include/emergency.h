@@ -24,6 +24,8 @@ int compareArrivalTime(const void *first,const void *second);
 int getWaitingTime(void * data);
 int comparePriority(const void *first,const void *second);
 int getArrivalTime(void * data);
+void updateWaitingTime(PQueue * waitingPatients);
+
 
 
 #endif

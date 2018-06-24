@@ -21,7 +21,7 @@ int main (int argc, char *argv[])
 
   int counter = 0;
   int doctorTimer = 0;
-  Patient * currentPatient = NULL;
+
 
   while(arrivingPatients->front != NULL || waitingPatients->front != NULL || doctorTimer != 0)
   {
@@ -41,44 +41,33 @@ int main (int argc, char *argv[])
     printPriorityQueue(waitingPatients);
 
 
+    Patient * currentPatient;
 
     if(doctorTimer <= 0 && waitingPatients->front != NULL)
     {
-      Patient * currentPatient = getFront(waitingPatients);
-      printf("currentPatient: ");
-      printPatient(currentPatient);
+      currentPatient = getFront(waitingPatients);
+
       deQueue(waitingPatients);
       doctorTimer = 5;
     }
 
     counter ++;
     doctorTimer --;
+    updateWaitingTime(waitingPatients);
 
-    printf("Counter After: %d\n", counter);
-    printPriorityQueue(waitingPatients);
+
+    printf("currentPatient: ");
     if(currentPatient != NULL)
     {
-      printf("currentPatient: ");
       printPatient(currentPatient);
+      printf("\n");
     }
 
   }
 
-  printPriorityQueue(waitingPatients);
+/********************************************ADDITION**********************************************/
 
-  /*while(arrivingPatients->front != NULL || currentPatient != NULL)
-  {
-    while (arrivingPatients->front != NULL && counter == getWaitingTime(arrivingPatients->front->data))
-    {
-      Patient * arrivedPatient = getFront(arrivingPatients);
-      deQueue(arrivingPatients);
-      enQueue(waitingPatients, arrivedPatient);
-
-      counter ++;
-    }
-
-  }*/
-
+  loadPatients(argv[1], arrivingPatients);
 
   return 0;
 }

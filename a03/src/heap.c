@@ -503,8 +503,6 @@ void heapifyDown(Heap * heap, Node * newNode)
       {
         if(tempNode->right != NULL)
         {
-          heap->printNode(tempNode->left->data);
-            heap->printNode(tempNode->right->data);
           if(heap->compare(tempNode->right->data, tempNode->left->data) < 0)
           {
             if(heap->compare(tempNode->right->data, tempNode->data) < 0)
