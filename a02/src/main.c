@@ -16,19 +16,19 @@ int main ()
 
 		//Show menu screen and ask user to create account or sign in
 		printf("\n*********************** PASSWORD VAULT ***********************\n");
-  	printf("\n(N) Create a new account\n(S) Sign in?\n\n(E) Exit\n\n> ");
+  	printf("\n(N) Create a new account\n(S) Sign in\n\n(E) Exit\n\n> ");
 		fgets(buffer, 100, stdin);
 		buffer[strlen(buffer) - 1] = '\0';
 		intro= buffer[0];
 
-		//Prompt user again if answer is incorrect
+		//Prompt user again if answer is not one of the optioj
 		while(intro != 'N' && intro != 'S' && intro != 'E')
 		{
 			if(intro == 'N' || intro == 'S' || intro == 'E')
 			{
 				break;
 			}
-			printf("> [Not one of the options. Try again.]\n> ");
+			printf("> Not one of the options. Try again.\n> ");
 			fgets(buffer, 100, stdin);
 			buffer[strlen(buffer) - 1] = '\0';
 			intro= buffer[0];
@@ -43,16 +43,30 @@ int main ()
 
 			//Sign in user
 			case'S':
-			printf("\n[Username]: ");
+			printf("> [Username]: ");
 			fgets(theUser.username, 100, stdin);
 			theUser.username[strlen(theUser.username) - 1] = '\0';
-			printf("[Password]: ");
+
+			//Check if input is valid
+			FILE * userFile;
+			userFile = fopen(createPathname(theUser),"rb+");
+			while(userFile == NULL)
+			{
+				printf("> No such file. Please try again\n");
+				printf("> [Username]: ");
+				fgets(theUser.username, 100, stdin);
+				theUser.username[strlen(theUser.username) - 1] = '\0';
+				userFile = fopen(createPathname(theUser),"rb+");
+			}
+			fclose(userFile);
+
+			//Ask password
+			printf("> [Password]: ");
 			fgets(theUser.password, 100, stdin);
 			theUser.password[strlen(theUser.password) - 1] = '\0';
 
 			signin(theUser, passVault);
-			printf("\n> [Logged in successfully]\n\n");
-			printTable(passVault);
+			printf("> [Logged in successfully]\n");
 			break;
 
 			//Exit program
@@ -66,7 +80,7 @@ int main ()
 		while(option != '2')
 		{
 			//Show menu screen and prompt for answer
-			printf("\n*********************** M E N U ***********************\n\n");
+			printf("\n*********************** M E N U ***********************\n");
 			printVault(theUser, passVault);
 			printf("\n(A) Add a system and password \n");
 			printf("(B) Change a password \n");
@@ -84,7 +98,7 @@ int main ()
 				{
 					break;
 				}
-				printf("> [Not one of the options. Try again.]\n> ");
+				printf("> Not one of the options. Try again.\n> ");
 				fgets(buffer, 100, stdin);
 				option = buffer[0];
 			}
@@ -93,15 +107,17 @@ int main ()
 			{
 				//Add new system and password
 				case 'A':
-				printf("\n*********************** ADD NEW SYSTEM AND PASSWORD ***********************\n\n");
+				printf("*********************** ADD NEW SYSTEM AND PASSWORD ***********************\n\n");
+				//Ask new system and password
 				User * newSystem = malloc(sizeof(User));
-				printf("\n[Enter new system]: ");
+				printf("> [Enter new system]: ");
 				fgets(newSystem->username, 100, stdin);
 				newSystem->username[strlen(newSystem->username) - 1] = '\0';
-				printf("[Enter system password]: ");
+				printf("> [Enter system password]: ");
 				fgets(newSystem->password, 100, stdin);
 				newSystem->password[strlen(newSystem->password) - 1] = '\0';
 
+				//Add to the vault
 				addPassword(newSystem, passVault);
 				loadTable(theUser, passVault);
 				printf("> [Password added successfully]\n");
@@ -111,14 +127,28 @@ int main ()
 				case 'B':
 				printf("\n*********************** CHANGE A SYSTEM PASSWORD ***********************\n\n");
 				printVault(theUser, passVault);
+
+				//Ask system to change
 				User * changeSystem = malloc(sizeof(User));
-				printf("\n[Enter system]: ");
+				printf("\n> [Enter system]: ");
 				fgets(changeSystem->username, 100, stdin);
 				changeSystem->username[strlen(changeSystem->username) - 1] = '\0';
-				printf("[Enter new system password]: ");
+
+				//Ask again if system does not exist
+				while(checkSystem(changeSystem, passVault) == 0)
+				{
+					printf("> No such system in the vault. Try again ");
+					printf("\n> [Enter system]: ");
+					fgets(changeSystem->username, 100, stdin);
+					changeSystem->username[strlen(changeSystem->username) - 1] = '\0';
+				}
+
+				//Ask password
+				printf("> [Enter new system password]: ");
 				fgets(changeSystem->password, 100, stdin);
 				changeSystem->password[strlen(changeSystem->password) - 1] = '\0';
 
+				//changePassword
 				changePassword(changeSystem, passVault);
 				loadTable(theUser, passVault);
 				printf("\n> [Password changed successfully]\n");
@@ -128,24 +158,48 @@ int main ()
 				case 'C':
 				printf("\n*********************** GET A SYSTEM PASSWORD ***********************\n\n");
 				printVault(theUser, passVault);
+
+				//Ask system to get
 				printf("\n[Enter system]: ");
 				User * getSystem = malloc(sizeof(User));
 				fgets(getSystem->username, 100, stdin);
 				getSystem->username[strlen(getSystem->username) - 1] = '\0';
 
+				//Ask again if system does not exist
+				while(checkSystem(getSystem, passVault) == 0)
+				{
+					printf("> No such system in the vault. Try again ");
+					printf("\n> [Enter system]: ");
+					fgets(getSystem->username, 100, stdin);
+					getSystem->username[strlen(getSystem->username) - 1] = '\0';
+				}
+
+				//Show password
 				strcpy(getSystem->password, getPassword(getSystem, passVault));
-				printf("\n>         >>>>[Your Password is]: %s<<<<\n", getSystem->password);
+				printf("\n           >>>>[Your Password is]: %s<<<<\n", getSystem->password);
 				break;
 
 				//Remove a system password
 				case 'D':
 				printf("\n*********************** REMOVE A SYSTEM PASSWORD ***********************\n\n");
 				printVault(theUser, passVault);
-				printf("\n[Enter system]: ");
+
+				//Ask system to remove
+				printf("\n> [Enter system]: ");
 				User * removeSystem = malloc(sizeof(User));
 				fgets(removeSystem->username, 100, stdin);
 				removeSystem->username[strlen(removeSystem->username) - 1] = '\0';
 
+				//Ask again if system doesnt exist
+				while(checkSystem(removeSystem, passVault) == 0)
+				{
+					printf("> No such system in the vault. Try again ");
+					printf("\n> [Enter system]: ");
+					fgets(removeSystem->username, 100, stdin);
+					removeSystem->username[strlen(removeSystem->username) - 1] = '\0';
+				}
+
+				//Remove password
 				removePassword(removeSystem, passVault);
 				loadTable(theUser, passVault);
 				printf("\n> [System and password removed successfully]\n");
@@ -154,8 +208,8 @@ int main ()
 				//Change master password
 				case '1':
 				printf("\n*********************** CHANGE YOUR VAULT PASSWORD ***********************\n\n");
-				printf("[Your username]: %s\n", theUser.username);
-				printf("[Enter new vault password]: ");
+				printf("> [Your username]: %s\n", theUser.username);
+				printf("> [Enter new vault password]: ");
 
 				fgets(theUser.password, 100, stdin);
 				theUser.password[strlen(theUser.password) - 1] = '\0';

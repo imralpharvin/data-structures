@@ -11,7 +11,7 @@ You must have a second .h file that you write that contains
 any extra functions you write for your heap.  You will need additional functions.
 
 In that .h file you MUST have a typedef that  defines the
-type "Heap"  and the type "Node".  Heap must be the
+type "Heap"  and the type "Node".  Heap must be the 
 struct that is your main heap,  Node must be the type that is stored in the heap.
 
 typedef somestructhere Heap;
@@ -24,6 +24,8 @@ typedef someotherstructhere Node;
 #define MIN_HEAP 0
 #define MAX_HEAP 1
 #define HEAP_TYPE unsigned char
+
+
 
 
 /**Function to allocate memory to the heap and point the heap to the appropriate functions. Allocates memory to the heap based on the size given.
@@ -71,7 +73,7 @@ void *getMinOrMax(Heap *heap);
 
 
 /**Function to switch the type of heap from min-to-max or max-to-min. This changes the htype flag from MIN_HEAP
- *to MAX_HEAP and vice versa. Once the flag has been changed, heapify is called on the heap to rearrange it to
+ *to MAX_HEAP and vice versa. Once the flag has been changed, heapify is called on the heap to rearrange it to 
  *fit the new heap property.
  *@param heap Pointer to a heap to switch from min-to-max or max-to-min.
  **/

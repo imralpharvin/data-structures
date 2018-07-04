@@ -107,5 +107,11 @@ void printPassword(void *toBePrinted);
 *@param toBeDeleted the data to be destroyed
 **/
 void deletePassword(void *toBeDeleted);
-void printTable(HTable *hashTable);
+
+/**Function to check if system exist on hashtable
+*@return integer that includes the index
+*@param tableSize size of hashtable
+*@param key character string for password
+**/
+int checkSystem(User * theUser, HTable * passVault );
 #endif

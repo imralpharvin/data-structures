@@ -8,10 +8,10 @@ User createUser (HTable * passVault)
 	User newUser;
 
 	//Prompt User to put username and password
-	printf("\n[Username]: ");
+	printf("> [Username]: ");
 	fgets(newUser.username, 100, stdin);
 	newUser.username[strlen(newUser.username) - 1] = '\0';
-	printf("[Password]: ");
+	printf("> [Password]: ");
 	fgets(newUser.password, 100, stdin);
 	newUser.password[strlen(newUser.password) - 1] = '\0';
 
@@ -23,7 +23,7 @@ User createUser (HTable * passVault)
 	//Load the file to the hashtable
 	loadFile(newUser,passVault);
 
-	printf("\n> [New account created successfully]\n\n");
+	printf("\n> [New account created successfully]\n");
 	return newUser;
 }
 
@@ -56,9 +56,9 @@ void signin(User theUser, HTable * passVault)
 				{
 					break;
 				}
-				printf("\n> Wrong Password: Try again \n\n");
-				printf("[Username]: %s\n", theUser.username);
-				printf("[Password]: ");
+				printf("> Wrong Password: Try again \n");
+				printf("> [Username]: %s\n", theUser.username);
+				printf("> [Password]: ");
 				fgets(theUser.password, 100, stdin);
 				theUser.password[strlen(theUser.password) - 1] = '\0';
 	 		}
@@ -75,88 +75,49 @@ void signin(User theUser, HTable * passVault)
 	fclose(userFile);
 }
 
-void loadFile(User theUser, HTable * passVault)
+HTable *createVault(size_t size, int (*hashFunction)(size_t tableSize, char key[]),void (*destroyData)(void *data),void (*printData)(void *toBePrinted))
 {
-  FILE *userFile;
-	int fileSize;
-	int numSystems;
-	User * tempArray = NULL;
+	//Create vault
+  HTable * newVault = createTable(size, hashFunction, destroyData, printData);
 
-	userFile = fopen(createPathname(theUser),"rb+");
-
-	fseek(userFile, 0, SEEK_END);
-	fileSize = ftell(userFile);
-	numSystems = fileSize/sizeof(User);
-	fseek(userFile, 0, SEEK_SET);
-
-	tempArray = (User *) calloc(numSystems, sizeof(User));
-	fread(tempArray, sizeof(User), numSystems ,userFile);
-
-  int i;
-	for(i = 0; i < numSystems; i++)
-	{
-		insertData(passVault,tempArray[i].username, tempArray[i].password);
-	}
-	fclose(userFile);
-	printVault(theUser,passVault);
-}
-
-void loadTable(User theUser, HTable * passVault)
-{
-  FILE *userFile;
-
-	userFile = fopen(createPathname(theUser),"wb");
-
-  int i;
-  for(i = 0; i < passVault->size; i++)
-  {
-    Node * temp = passVault->table[i];
-    while(temp != NULL)
-    {
-      Node *tempDelete = temp;
-      User tempUser;
-      strcpy(tempUser.username , tempDelete->key);
-      strcpy(tempUser.password , tempDelete->data);
-      fwrite(&tempUser, sizeof(User),1,userFile);
-      temp = temp->next;
-    }
-  }
-  fclose(userFile);
-	printVault(theUser,passVault);
+  return newVault;
 }
 
 void addPassword(User * theUser, HTable * passVault )
 {
+	//Insert password
 	insertData(passVault, theUser->username, theUser->password);
-
 }
 
 void changePassword(User * theUser, HTable * passVault )
 {
+	//change password
 	changeData(passVault, theUser->username, theUser->password);
 }
 
 char * getPassword(User * theUser, HTable * passVault )
 {
+	//return password
 	return lookupData(passVault, theUser->username);
 }
 
 void removePassword(User * theUser, HTable * passVault )
 {
+	//remove password
 	removeData(passVault, theUser->username);
 }
 
-HTable *createVault(size_t size, int (*hashFunction)(size_t tableSize, char key[]),void (*destroyData)(void *data),void (*printData)(void *toBePrinted))
+int checkSystem(User * theUser, HTable * passVault )
 {
-  HTable * newVault = createTable(size, hashFunction, destroyData, printData);
-
-  return newVault;
+	//Check if user in the hashtable
+	return checkKey(passVault, theUser->username);
 }
 
 void printVault(User theUser, HTable * passVault)
 {
 	printf("----------------\n");
 	printf("[Your Accounts]:\n");
+	//Print keys
 	int i = 0;
 	for(i = 0; i < passVault->size; i++)
 	{
@@ -186,34 +147,18 @@ int hashFunction(size_t tableSize, char key[])
 	for(i = 0; i < letter; i++)
 	{
 		int temp = key[i] - '0';
-		total += temp;
+		total += temp; //Sums the ASCII value of each letter
 
 	}
-	index = total  % tableSize;
+	index = total  % tableSize; //Divide total by size of table
 
 	return index;
-}
-
-void printTable(HTable *hashTable)
-{
-	int i = 0;
-  for(i = 0; i < hashTable->size; i++)
-	{
-    Node *head = hashTable->table[i];
-    Node *cur = head;
-    while(cur != NULL)
-		{
-  		printf("Hash :%d | Key :%s | Data : ", hashTable->hashFunction(hashTable->size, cur->key), cur->key);
-      hashTable->printData(cur->data);
-      cur = cur->next;
-    }
-  }
 }
 
 void printPassword(void *toBePrinted)
 {
   char * number;
-
+	//Print password
   number = ((char *) toBePrinted);
   printf("%s\n", number);
 }
@@ -231,7 +176,57 @@ char * createPathname (User theUser)
 	strcat(pathname, theUser.username);
 	strcat(pathname, ".bin");
 
-	printf("Path: %s\n", pathname);
-
 	return pathname;
+}
+
+void loadFile(User theUser, HTable * passVault)
+{
+  FILE *userFile;
+	int fileSize;
+	int numSystems;
+	User * tempArray = NULL;
+	//Open file
+	userFile = fopen(createPathname(theUser),"rb+");
+	fseek(userFile, 0, SEEK_END);
+	fileSize = ftell(userFile);
+	numSystems = fileSize/sizeof(User);
+	fseek(userFile, 0, SEEK_SET);
+
+	//Read file and put them in an array
+	tempArray = (User *) calloc(numSystems, sizeof(User));
+	fread(tempArray, sizeof(User), numSystems ,userFile);
+
+	//Insert the contents of array to the hashtable
+  int i;
+	for(i = 0; i < numSystems; i++)
+	{
+		insertData(passVault,tempArray[i].username, tempArray[i].password);
+	}
+	fclose(userFile);
+	printVault(theUser,passVault);
+}
+
+void loadTable(User theUser, HTable * passVault)
+{
+  FILE *userFile;
+	//Open file
+	userFile = fopen(createPathname(theUser),"wb");
+
+	//Write the contents of the hashtable to the file
+  int i;
+  for(i = 0; i < passVault->size; i++)
+  {
+    Node * temp = passVault->table[i];
+    while(temp != NULL)
+    {
+      Node *tempDelete = temp;
+      User tempUser;
+      strcpy(tempUser.username , tempDelete->key);
+      strcpy(tempUser.password , tempDelete->data);
+      fwrite(&tempUser, sizeof(User),1,userFile);
+      temp = temp->next;
+    }
+  }
+  fclose(userFile);
+	printVault(theUser,passVault);
 }

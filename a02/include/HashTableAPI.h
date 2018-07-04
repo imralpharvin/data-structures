@@ -1,7 +1,8 @@
 /**
  * @file HashTableAPI.h
  * @author Michael Ellis
- * @date February 2017
+ * @modified Ralph Arvin De Castro
+ * @date June 24
  * @brief File containing the function definitions of a hash table
  */
 
@@ -82,9 +83,27 @@ void removeData(HTable *hashTable, char key[]);
  **/
 void *lookupData(HTable *hashTable, char key[]);
 
-
+/**Function to change the data from the key given.
+ *@pre The hash table exists and has memory allocated to it
+ *@post Node at key will be changed from the hash table if it exists.
+ *@param hashTable pointer to the hash table containing data nodes
+ *@param key integer that represents a piece of data in the table (eg 35->"hello")
+ *@param data pointer to generic data that is to be inserted into the list
+ **/
 void changeData(HTable *hashTable, char key[], void * data);
 
+/**Function to check if key exists in the hashtable.
+ *@pre The hash table exists and has memory allocated to it
+ *@param hashTable pointer to the hash table containing data nodes
+ *@param key integer that represents a piece of data in the table (eg 35->"hello")
+ *@return returns 1 if key exists in hash table. returns 0 if key does not exist.
+ **/
+int checkKey(HTable *hashTable, char key[]);
 
+/**Function to print the nodes of the hash table
+ *@pre The hash table exists and has memory allocated to it
+ *@param hashTable pointer to the hash table containing data nodes
+ **/
+void printTable(HTable *hashTable);
 
 #endif
