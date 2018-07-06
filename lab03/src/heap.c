@@ -63,6 +63,7 @@ void insertHeapNode(Heap *heap, void *data)
     int mid = (pow(2 , heapLevel))/2;
     int direction = 0;
 
+    //Traverse to the last node
     for(i = 0; i < heapLevel; i++)
     {
       if(heapBottom < mid)
@@ -170,23 +171,22 @@ void *getMinOrMax(Heap *heap)
 void changeHeapType(Heap *heap)
 {
   int j;
+  //Change heap type
   if(heap->type == 0)
   {
-    heap->type =1 ;
+    heap->type = 1 ;
   }
-
   else if(heap->type == 1)
   {
     heap->type = 0 ;
   }
 
+  //Heapify every single node in the array
   for(j = heap->size; j > 0; j--)
   {
     if( j == 1)
     {
-      /*Node * printNode = heap->heap;
-      printf("Position 1: ");
-      print(printNode->data);*/
+      return;
     }
     else
     {
@@ -204,7 +204,6 @@ void changeHeapType(Heap *heap)
       heapBottom = j1 - heapLevelSum;
       Node * exchangeNode = heap->heap;
 
-
       int heapBottomSum = pow(2 , heapLevel);
       int mid = heapBottomSum/2;
 
@@ -218,21 +217,19 @@ void changeHeapType(Heap *heap)
         {
           exchangeNode = exchangeNode->right;
           heapBottom = heapBottom -mid;
-
         }
           mid = mid/2;
       }
-
       heapifyUp(heap, exchangeNode);
     }
   }
+
 
   for(j = 1; j <= heap->size; j++)
   {
     if( j == 1)
     {
-      /*printf("Position 1: ");
-      print(printNode->data);*/
+      return;
     }
     else
     {
@@ -264,11 +261,9 @@ void changeHeapType(Heap *heap)
         {
           exchangeNode = exchangeNode->right;
           heapBottom = heapBottom -mid;
-
         }
           mid = mid/2;
       }
-
       heapifyDown(heap, exchangeNode);
     }
   }
@@ -296,7 +291,6 @@ void heapifyUp(Heap * heap, Node * newNode)
       newNode->data = parentNode2->data;
       parentNode2->data = temp;
 
-
       newNode = parentNode2;
       parentNode2 = parentNode2->parent;
     }
@@ -309,7 +303,6 @@ void heapifyUp(Heap * heap, Node * newNode)
       newNode->data = parentNode2->data;
       parentNode2->data = temp;
 
-
       newNode = parentNode2;
       parentNode2 = parentNode2->parent;
     }
@@ -320,57 +313,32 @@ void heapifyUp(Heap * heap, Node * newNode)
 
 void heapifyDown(Heap * heap, Node * newNode)
 {
-
   if(heap->size > 1)
   {
   Node * tempNode = newNode;
 
-    if(heap->type == 1)
+    while(tempNode->right != NULL || tempNode->left != NULL)
     {
-      while(tempNode->right != NULL || tempNode->left != NULL)
+      if(tempNode->right != NULL)
       {
-
-        if(tempNode->right != NULL)
+        if((heap->compare(tempNode->right->data, tempNode->left->data) > 0 && heap->type == 1) || (heap->compare(tempNode->right->data, tempNode->left->data) < 0 && heap->type == 0))
         {
-          if(heap->compare(tempNode->right->data, tempNode->left->data) > 0)
+          if((heap->compare(tempNode->right->data, tempNode->data) > 0 && heap->type == 1) || (heap->compare(tempNode->right->data, tempNode->data) < 0 && heap->type == 0))
           {
-            if(heap->compare(tempNode->right->data, tempNode->data) > 0)
-            {
-              void * temp = tempNode->right->data;
-              tempNode->right->data = tempNode->data;
-              tempNode->data = temp;
+            void * temp = tempNode->right->data;
+            tempNode->right->data = tempNode->data;
+            tempNode->data = temp;
 
-              tempNode = tempNode->right;
-
-            }
-            else
-            {
-              break;
-            }
+            tempNode = tempNode->right;
           }
           else
           {
-
-            if(heap->compare(tempNode->left->data, tempNode->data) > 0)
-            {
-              void * temp = tempNode->left->data;
-              tempNode->left->data = tempNode->data;
-              tempNode->data = temp;
-
-              tempNode = tempNode->left;
-
-            }
-            else
-            {
-              break;
-            }
+            break;
           }
         }
         else
         {
-          /*printf("Here\n");*/
-
-          if(heap->compare(tempNode->left->data, tempNode->data) > 0)
+          if((heap->compare(tempNode->left->data, tempNode->data) > 0 && heap->type == 1) || (heap->compare(tempNode->left->data, tempNode->data) < 0 && heap->type == 0))
           {
             void * temp = tempNode->left->data;
             tempNode->left->data = tempNode->data;
@@ -383,63 +351,20 @@ void heapifyDown(Heap * heap, Node * newNode)
             break;
           }
         }
-
       }
-    }
-
-    else if(heap->type == 0)
-    {
-      while(tempNode->right != NULL || tempNode->left != NULL)
+      else
       {
-        if(tempNode->right != NULL)
+        if((heap->compare(tempNode->left->data, tempNode->data) > 0 && heap->type == 1) || (heap->compare(tempNode->left->data, tempNode->data) < 0 && heap->type == 0))
         {
+          void * temp = tempNode->left->data;
+          tempNode->left->data = tempNode->data;
+          tempNode->data = temp;
 
-          if(heap->compare(tempNode->right->data, tempNode->left->data) < 0)
-          {
-            if(heap->compare(tempNode->right->data, tempNode->data) < 0)
-            {
-              void * temp = tempNode->right->data;
-              tempNode->right->data = tempNode->data;
-              tempNode->data = temp;
-
-              tempNode = tempNode->right;
-            }
-            else
-            {
-              break;
-            }
-          }
-          else
-          {
-            if(heap->compare(tempNode->left->data, tempNode->data) < 0)
-            {
-              void * temp = tempNode->left->data;
-              tempNode->left->data = tempNode->data;
-              tempNode->data = temp;
-
-              tempNode = tempNode->left;
-            }
-            else
-            {
-              break;
-            }
-          }
+          tempNode = tempNode->left;
         }
         else
         {
-
-          if(heap->compare(tempNode->left->data, tempNode->data) < 0)
-          {
-            void * temp = tempNode->left->data;
-            tempNode->left->data = tempNode->data;
-            tempNode->data = temp;
-
-            tempNode = tempNode->left;
-            }
-          else
-          {
-              break;
-          }
+          break;
         }
       }
     }
@@ -447,22 +372,6 @@ void heapifyDown(Heap * heap, Node * newNode)
 
 }
 
-void print(void *toBePrinted)
-{
-  int number;
-
-  number = *((int *) toBePrinted);
-  printf("%d\n", number);
-}
-
-int getData(void *toBePrinted)
-{
-  int number;
-
-  number = *((int *) toBePrinted);
-
-  return number;
-}
 
 void printHeap(Heap * heap)
 {

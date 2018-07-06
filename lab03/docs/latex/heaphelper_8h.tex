@@ -1,0 +1,117 @@
+\hypertarget{heaphelper_8h}{}\section{include/heaphelper.h File Reference}
+\label{heaphelper_8h}\index{include/heaphelper.\+h@{include/heaphelper.\+h}}
+
+
+File containing the function definitions of a hash table.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structNode}{Node}
+\item 
+struct \hyperlink{structHeap}{Heap}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{heaphelper_8h_a4c6c6aff2b0e57a0ec4f2d4d6276a48d}\label{heaphelper_8h_a4c6c6aff2b0e57a0ec4f2d4d6276a48d}} 
+\#define {\bfseries M\+I\+N\+\_\+\+H\+E\+AP}~0
+\item 
+\mbox{\Hypertarget{heaphelper_8h_abbeb121d44260375bbedb804aa56bdc0}\label{heaphelper_8h_abbeb121d44260375bbedb804aa56bdc0}} 
+\#define {\bfseries M\+A\+X\+\_\+\+H\+E\+AP}~1
+\item 
+\mbox{\Hypertarget{heaphelper_8h_a3565d2f7ab5f5189c585448b1455fb09}\label{heaphelper_8h_a3565d2f7ab5f5189c585448b1455fb09}} 
+\#define {\bfseries H\+E\+A\+P\+\_\+\+T\+Y\+PE}~unsigned char
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structNode}{Node} \hyperlink{heaphelper_8h_a3b09f37e675bcd48a01bf22155996872}{Node}
+\item 
+typedef struct \hyperlink{structHeap}{Heap} \hyperlink{heaphelper_8h_a705af815969c97892c0aaaa658f6c88c}{Heap}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{heaphelper_8h_a1a636851e2018f56ce962313b4a9c06b}{heapify\+Up} (\hyperlink{structHeap}{Heap} $\ast$heap, \hyperlink{structNode}{Node} $\ast$node)
+\item 
+void \hyperlink{heaphelper_8h_af76c8147e0460cd6b03b3092940b619a}{heapify\+Down} (\hyperlink{structHeap}{Heap} $\ast$heap, \hyperlink{structNode}{Node} $\ast$node)
+\item 
+void \hyperlink{heaphelper_8h_aba460c46a38e2bae4dd2382fdc4f78e9}{print\+Heap} (\hyperlink{structHeap}{Heap} $\ast$heap)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+File containing the function definitions of a hash table. 
+
+\begin{DoxyAuthor}{Author}
+Ralph Arvin De Castro 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+July 2018 
+\end{DoxyDate}
+
+
+\subsection{Typedef Documentation}
+\mbox{\Hypertarget{heaphelper_8h_a705af815969c97892c0aaaa658f6c88c}\label{heaphelper_8h_a705af815969c97892c0aaaa658f6c88c}} 
+\index{heaphelper.\+h@{heaphelper.\+h}!Heap@{Heap}}
+\index{Heap@{Heap}!heaphelper.\+h@{heaphelper.\+h}}
+\subsubsection{\texorpdfstring{Heap}{Heap}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structHeap}{Heap} \hyperlink{structHeap}{Heap}}
+
+\hyperlink{structHeap}{Heap} structure for binary tree implementation of a \hyperlink{structHeap}{Heap} \mbox{\Hypertarget{heaphelper_8h_a3b09f37e675bcd48a01bf22155996872}\label{heaphelper_8h_a3b09f37e675bcd48a01bf22155996872}} 
+\index{heaphelper.\+h@{heaphelper.\+h}!Node@{Node}}
+\index{Node@{Node}!heaphelper.\+h@{heaphelper.\+h}}
+\subsubsection{\texorpdfstring{Node}{Node}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structNode}{Node} \hyperlink{structNode}{Node}}
+
+\hyperlink{structNode}{Node} of the heap 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{heaphelper_8h_af76c8147e0460cd6b03b3092940b619a}\label{heaphelper_8h_af76c8147e0460cd6b03b3092940b619a}} 
+\index{heaphelper.\+h@{heaphelper.\+h}!heapify\+Down@{heapify\+Down}}
+\index{heapify\+Down@{heapify\+Down}!heaphelper.\+h@{heaphelper.\+h}}
+\subsubsection{\texorpdfstring{heapify\+Down()}{heapifyDown()}}
+{\footnotesize\ttfamily void heapify\+Down (\begin{DoxyParamCaption}\item[{\hyperlink{structHeap}{Heap} $\ast$}]{heap,  }\item[{\hyperlink{structNode}{Node} $\ast$}]{node }\end{DoxyParamCaption})}
+
+Function to rearrange a heap to maintain heap property.\+Starts with a selected to heapify node then switch and traverse down if needed \begin{DoxyPrecond}{Precondition}
+\hyperlink{structHeap}{Heap} must exist and have data allocated to it 
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em heap} & Pointer to a heap \\
+\hline
+{\em node} & Pointer to a node to heapify down \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{heaphelper_8h_a1a636851e2018f56ce962313b4a9c06b}\label{heaphelper_8h_a1a636851e2018f56ce962313b4a9c06b}} 
+\index{heaphelper.\+h@{heaphelper.\+h}!heapify\+Up@{heapify\+Up}}
+\index{heapify\+Up@{heapify\+Up}!heaphelper.\+h@{heaphelper.\+h}}
+\subsubsection{\texorpdfstring{heapify\+Up()}{heapifyUp()}}
+{\footnotesize\ttfamily void heapify\+Up (\begin{DoxyParamCaption}\item[{\hyperlink{structHeap}{Heap} $\ast$}]{heap,  }\item[{\hyperlink{structNode}{Node} $\ast$}]{node }\end{DoxyParamCaption})}
+
+Function to rearrange a heap to maintain heap property.\+Starts with a selected to heapify node then switch and traverse up if needed \begin{DoxyPrecond}{Precondition}
+\hyperlink{structHeap}{Heap} must exist and have data allocated to it 
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em heap} & Pointer to a heap \\
+\hline
+{\em node} & Pointer to a node to heapify up \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{heaphelper_8h_aba460c46a38e2bae4dd2382fdc4f78e9}\label{heaphelper_8h_aba460c46a38e2bae4dd2382fdc4f78e9}} 
+\index{heaphelper.\+h@{heaphelper.\+h}!print\+Heap@{print\+Heap}}
+\index{print\+Heap@{print\+Heap}!heaphelper.\+h@{heaphelper.\+h}}
+\subsubsection{\texorpdfstring{print\+Heap()}{printHeap()}}
+{\footnotesize\ttfamily void print\+Heap (\begin{DoxyParamCaption}\item[{\hyperlink{structHeap}{Heap} $\ast$}]{heap }\end{DoxyParamCaption})}
+
+Function to print all the nodes of the heap \begin{DoxyPrecond}{Precondition}
+\hyperlink{structHeap}{Heap} must exist and have data allocated to it 
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em heap} & Pointer to a heap \\
+\hline
+\end{DoxyParams}

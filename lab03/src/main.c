@@ -4,12 +4,22 @@
 #include"heaphelper.h"
 #include"heap.h"
 
+//User defined function
+void print(void *toBePrinted)
+{
+  int number;
 
+  number = *((int *) toBePrinted);
+  printf("%d\n", number);
+}
+
+//User defined function
 void delete(void *toBeDeleted)
 {
   free(toBeDeleted);
 }
 
+//User defined function
 int compare(const void *first,const void *second)
 {
   int *a = (int*) first;
@@ -26,9 +36,9 @@ int main ()
     int * ptr5 = malloc(sizeof(int));
     int * ptr6 = malloc(sizeof(int));
     int * ptr7 = malloc(sizeof(int));
-    int * ptr8 = malloc(sizeof(int));
+    /*int * ptr8 = malloc(sizeof(int));
     int * ptr9 = malloc(sizeof(int));
-    int * ptr10 = malloc(sizeof(int));
+    int * ptr10 = malloc(sizeof(int));*/
 
     *ptr1 = 1;
     *ptr2 = 2;
@@ -37,16 +47,15 @@ int main ()
     *ptr5 = 4;
     *ptr6 = 10;
     *ptr7 = 8;
-    *ptr8 = 9;
+  /*  *ptr8 = 9;
     *ptr9 = 89;
-    *ptr10 = 95;
+    *ptr10 = 95;*/
 
 
     printf("*** Test #1: createHeapNode ***\n");
     printf("Expected:\n");
     printf("HeapNode is NOT null\n");
     Node * newNode1 = createHeapNode(ptr1);
-    Node * newNode2 = createHeapNode(ptr2);
     printf("Received:\n");
     printf("%s\n", newNode1 ? "HeapNode is NOT null" : "HeapNode is NULL");
     printf("%s", newNode1 ? "   ***PASS***   \n\n" : "   ***FAILED***   \n\n");
@@ -73,7 +82,7 @@ int main ()
     printHeap(newHeap);
     printf("   ***PASS***   \n\n");
 
-    printf("*** Test #4: deleteMinOrMax ***\n");
+    printf("*** Test #4a: deleteMinOrMax ***\n");
     printf("Expected:\n\n");
     printf("Position 1: 2\nPosition 2: 4\nPosition 3: 3\nPosition 4: 5\nPosition 5: 8\nPosition 6: 10\n");
     deleteMinOrMax(newHeap);
@@ -81,7 +90,7 @@ int main ()
     printHeap(newHeap);
     printf("   ***PASS***   \n\n");
 
-    printf("*** Test #4: deleteMinOrMax ***\n");
+    printf("*** Test #4b: deleteMinOrMax ***\n");
     printf("Expected:\n\n");
     printf("Position 1: 3\nPosition 2: 4\nPosition 3: 10\nPosition 4: 5\nPosition 5: 8\n");
     deleteMinOrMax(newHeap);
@@ -89,13 +98,13 @@ int main ()
     printHeap(newHeap);
     printf("   ***PASS***   \n\n");
 
-    printf("*** Test #4: getMinOrMax ***\n");
+    printf("*** Test #5: getMinOrMax ***\n");
     printf("Expected: 3\n");
     printf("Received: ");
     print(getMinOrMax(newHeap));
     printf("   ***PASS***   \n\n");
 
-    printf("*** Test #5: changeHeapType ***\n");
+    printf("*** Test #6: changeHeapType ***\n");
     printf("Expected:\n");
     printf("Position 1: 10\nPosition 2: 5\nPosition 3: 8\nPosition 4: 3\nPosition 5: 4\n");
     printf("Received:\n");
@@ -103,12 +112,12 @@ int main ()
     printHeap(newHeap);
     printf("   ***PASS***   \n\n");
 
-    printf("*** Test #6: deleteHeap***\n");
+    printf("*** Test #7: deleteHeap***\n");
     printf("Expected:\n");
     printf("Heap is NULL\n");
     deleteHeap(newHeap);
     printf("Received:\n");
     printf("%s\n", newHeap->heap ? "Heap is NOT null" : "Heap is NULL");
-    printf("%s", newHeap->heap ? "   ***PASS***   \n\n" : "   ***FAILED***   \n\n");
+    printf("%s", newHeap->heap ? "   ***FAILED***   \n\n" : "   ***PASS***   \n\n");
     return 0;
 }
