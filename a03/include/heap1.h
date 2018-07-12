@@ -1,16 +1,32 @@
 /**
- * @file heap.h
+ * @file HeapAPI.h
  * @author Michael Ellis
  * @date March 2017
  * @brief File containing the function definitions of a heap
  */
 
+
+/* notes for students
+You must have a second .h file that you write that contains
+any extra functions you write for your heap.  You will need additional functions.
+
+In that .h file you MUST have a typedef that  defines the
+type "Heap"  and the type "Node".  Heap must be the 
+struct that is your main heap,  Node must be the type that is stored in the heap.
+
+typedef somestructhere Heap;
+typedef someotherstructhere Node;
+
+*/
 #ifndef _HEAP_API_
 #define _HEAP_API_
 
 #define MIN_HEAP 0
 #define MAX_HEAP 1
 #define HEAP_TYPE unsigned char
+
+
+
 
 /**Function to allocate memory to the heap and point the heap to the appropriate functions. Allocates memory to the heap based on the size given.
  *@return pointer to the heap
@@ -55,12 +71,15 @@ void deleteMinOrMax(Heap *heap);
  **/
 void *getMinOrMax(Heap *heap);
 
+
 /**Function to switch the type of heap from min-to-max or max-to-min. This changes the htype flag from MIN_HEAP
- *to MAX_HEAP and vice versa. Once the flag has been changed, heapify is called on the heap to rearrange it to
+ *to MAX_HEAP and vice versa. Once the flag has been changed, heapify is called on the heap to rearrange it to 
  *fit the new heap property.
  *@param heap Pointer to a heap to switch from min-to-max or max-to-min.
  **/
 void changeHeapType(Heap *heap);
+
+
 
 /**Function delete a heap. This function calls deleteMinOrMax the same amount of times as the size of the
  *heap, which heapifies after each deletion. Finally, it frees the Heap structure.

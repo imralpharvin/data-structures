@@ -130,15 +130,15 @@ void deleteMinOrMax(Heap *heap)
     int heapLevel = 0;
     int heapLevelSum = 0;
     int heapBottom = 0;
-    int j1 = heap->size -1;
+    int currentPosition = heap->size -1;
     int i;
-    while(heapLevelSum + pow(2 , heapLevel) <= j1)
+    while(heapLevelSum + pow(2 , heapLevel) <= currentPosition)
     {
       heapLevelSum = heapLevelSum + pow(2 , heapLevel);
       heapLevel++;
     }
 
-    heapBottom = j1 - heapLevelSum;
+    heapBottom = currentPosition - heapLevelSum;
     Node * lastNode = heap->heap;
 
     int heapBottomSum = pow(2 , heapLevel);
@@ -194,14 +194,14 @@ void changeHeapType(Heap *heap)
       int heapLevelSum = 0;
       int heapBottom = 0;
       int i;
-      int j1 = j -1;
-      while(heapLevelSum + pow(2 , heapLevel) <= j1)
+      int currentPosition = j -1;
+      while(heapLevelSum + pow(2 , heapLevel) <= currentPosition)
       {
         heapLevelSum = heapLevelSum + pow(2 , heapLevel);
         heapLevel++;
       }
 
-      heapBottom = j1 - heapLevelSum;
+      heapBottom = currentPosition - heapLevelSum;
       Node * exchangeNode = heap->heap;
 
       int heapBottomSum = pow(2 , heapLevel);
@@ -237,14 +237,14 @@ void changeHeapType(Heap *heap)
       int heapLevelSum = 0;
       int heapBottom = 0;
       int i;
-      int j1 = j -1;
-      while(heapLevelSum + pow(2 , heapLevel) <= j1)
+      int currentPosition = j -1;
+      while(heapLevelSum + pow(2 , heapLevel) <= currentPosition)
       {
         heapLevelSum = heapLevelSum + pow(2 , heapLevel);
         heapLevel++;
       }
 
-      heapBottom = j1 - heapLevelSum;
+      heapBottom = currentPosition - heapLevelSum;
       Node * exchangeNode = heap->heap;
 
 
@@ -379,7 +379,7 @@ void printHeap(Heap * heap)
 
   for(j = 1; j <= heap->size; j++)
   {
-    if( j == 1)
+    if(j == 1)
     {
       Node * printNode = heap->heap;
       printf("Position 1: ");
@@ -391,14 +391,14 @@ void printHeap(Heap * heap)
       int heapLevelSum = 0;
       int heapBottom = 0;
       int i;
-      int j1 = j -1;
-      while(heapLevelSum + pow(2 , heapLevel) <= j1)
+      int currentPosition = j -1;
+      while(heapLevelSum + pow(2 , heapLevel) <= currentPosition)
       {
         heapLevelSum = heapLevelSum + pow(2 , heapLevel);
         heapLevel++;
       }
 
-      heapBottom = j1 - heapLevelSum;
+      heapBottom = currentPosition - heapLevelSum;
       Node * printNode = heap->heap;
 
 
@@ -421,8 +421,6 @@ void printHeap(Heap * heap)
       }
       printf("Position %d: ", j);
       heap->printNode(printNode->data);
-
-
     }
   }
   printf("\n");

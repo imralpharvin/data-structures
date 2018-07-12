@@ -1,0 +1,74 @@
+****************************************************
+Ralph Arvin De Castro		    0923223
+CIS*2520		Assignment 3 ER Hospital
+June 24 2018			rdecastr@uoguelph.ca
+****************************************************
+Report.txt - order
+4 data files
+Describe the running of results
+
+************************
+Program Description
+**************************
+ This program implements a priority queue to simulate a minor emergency clinic.
+
+ Starvation Algorithm
+ Aging - gradually increasing the priority of processes that wait in the system for a long time
+
+************************
+ Sources
+**************************
+https://www.geeksforgeeks.org/starvation-aging-operating-systems/
+https://en.wikipedia.org/wiki/Starvation_(computer_science)
+
+************
+Compilation
+************
+ To compile this code:
+ run: make
+
+ To compile the testing program:
+ run: make test
+
+  Detailed Make options:
+
+  make  compiles the main.c program with the library
+  make cppcheck runs the cppcheck option
+  make test compiles the testAPI.c program with the library
+  make clean removes executable files and assests files
+
+************
+Execution
+************
+ To execute main:
+ run: ./bin/runMe
+
+ To execute test:
+ run: ./bin/testMe
+
+************
+Complexity
+************
+createTable
+  O(1) - only goes through the function to create and allocate memory for the table and its members. Its complexity does not depend on the number of nodes in the hashtable.
+createNode
+  O(1) - only goes through the function to create and allocate memory for the node and its members. Its complexity does not depend on the number of nodes in the hashtable.
+destroyTable
+  O(N) - deletes every node through a while loop. Complexity depends on the number of nodes.
+insertData
+  O(1) - only requires an index to insert the node. Its complexity does not depend on the number of nodes in the hashtable.
+removeData
+  O(1) - only requires an index to remove the node. Its complexity does not depend on the number of nodes in the hashtable.
+lookupData
+  O(1) - only requires an index to get the node. Its complexity does not depend on the number of nodes in the hashtable.
+changeData
+  O(1) - only requires an index to change the node. Its complexity does not depend on the number of nodes in the hashtable.
+checkKey
+  O(1) - only requires an index to check the key. Its complexity does not depend on the number of nodes in the hashtable.
+printTable
+  O(N) - goes through every node to print. Complexity depends on the size of hashtable.
+
+
+****************************
+Known Limitations, Issues and Errors
+****************************
