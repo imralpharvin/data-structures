@@ -47,7 +47,7 @@ void printPatient(void *toBePrinted)
 {
   Patient * temp = (Patient *) toBePrinted;
 
-  printf("ClientID: %s | Priority:%d | Symptom Code: %s | Arrived at %d minutes and waited %d minutes\n", temp->clientID, temp->oldPriority, temp->symptomCode, temp->arrivalTime, temp->waitingTime);
+  printf("%10s | Priority:%d -> %d | %s | Arrival Time: %d m | Waiting Time: %d m\n", temp->clientID, temp->oldPriority,temp->priority, temp->symptomCode, temp->arrivalTime, temp->waitingTime);
 
 }
 int compareArrivalTime(const void *first,const void *second)
@@ -155,13 +155,13 @@ void updateWaitingTime(PQueue * waitingPatients)
       Patient * changePatient = (Patient*)changeNode->data;
 
       changePatient->waitingTime ++;
-      if(changePatient->waitingTime == 10)
+      if((changePatient->waitingTime / 10) == 0)
       {
         if(changePatient->priority > 1)
         {
           changePatient->priority --;
         }
-        changePatient->waitingTime = 0;
+        /*changePatient->waitingTime = 0;*/
       }
       heapifyUp(waitingPatients->heap, changeNode);
 
