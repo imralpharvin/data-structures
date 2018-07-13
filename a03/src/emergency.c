@@ -30,13 +30,15 @@ void loadPatients(char *filename, PQueue * allPatients)
 
 Patient *initializePatient(char clientID[], int priority, char symptomCode[])
 {
+  int oldPriority = priority;
+
   Patient *patient = malloc(sizeof(Patient));
   strcpy(patient->clientID , clientID);
   patient->priority = priority;
   strcpy(patient->symptomCode , symptomCode);
   patient->arrivalTime = hashFunction(20, clientID);
   patient->waitingTime = 0;
-
+  patient->oldPriority = oldPriority;
   return patient;
 }
 
@@ -45,7 +47,7 @@ void printPatient(void *toBePrinted)
 {
   Patient * temp = (Patient *) toBePrinted;
 
-  printf("%s %d %s %d %d\n", temp->clientID, temp->priority, temp->symptomCode, temp->arrivalTime, temp->waitingTime);
+  printf("ClientID: %s | Priority:%d | Symptom Code: %s | Arrived at %d minutes and waited %d minutes\n", temp->clientID, temp->oldPriority, temp->symptomCode, temp->arrivalTime, temp->waitingTime);
 
 }
 int compareArrivalTime(const void *first,const void *second)
@@ -133,7 +135,6 @@ void updateWaitingTime(PQueue * waitingPatients)
       Node * changeNode = waitingPatients->front;
 
       int heapBottomSum = pow(2 , heapLevel);
-      /*printf("Level: %d, Size: %d [%d + %d], Next:%d\n", heapLevel, j1, heapLevelSum, heapBottom ,heapBottomSum);*/
       int mid = heapBottomSum/2;
 
       for(i = 0; i < heapLevel; i++)

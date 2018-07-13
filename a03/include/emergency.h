@@ -13,6 +13,8 @@ typedef struct patient
   char symptomCode[3];
   int arrivalTime;
   int waitingTime;
+  int oldPriority;
+
 }Patient;
 
 void loadPatients(char *filename, PQueue * allPatients);
