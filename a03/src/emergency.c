@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
+
 
 
 #include "heaphelper.h"
@@ -28,13 +30,15 @@ void loadPatients(char *filename, PQueue * allPatients)
 
 Patient *initializePatient(char clientID[], int priority, char symptomCode[])
 {
+  int oldPriority = priority;
+
   Patient *patient = malloc(sizeof(Patient));
   strcpy(patient->clientID , clientID);
   patient->priority = priority;
   strcpy(patient->symptomCode , symptomCode);
   patient->arrivalTime = hashFunction(20, clientID);
   patient->waitingTime = 0;
-
+  patient->oldPriority = oldPriority;
   return patient;
 }
 
@@ -43,7 +47,7 @@ void printPatient(void *toBePrinted)
 {
   Patient * temp = (Patient *) toBePrinted;
 
-  printf("%s %d %s %d %d\n", temp->clientID, temp->priority, temp->symptomCode, temp->arrivalTime, temp->waitingTime);
+  printf("%10s | Priority:%d -> %d | %s | Arrival Time: %d m | Waiting Time: %d m\n", temp->clientID, temp->oldPriority,temp->priority, temp->symptomCode, temp->arrivalTime, temp->waitingTime);
 
 }
 int compareArrivalTime(const void *first,const void *second)
@@ -96,4 +100,71 @@ int getArrivalTime(void * data)
   Patient * temp = (Patient*)data;
 
   return temp->arrivalTime;
+}
+
+void updateWaitingTime(PQueue * waitingPatients)
+{
+  int j;
+
+  for(j = 1; j <= waitingPatients->heap->size; j++)
+  {
+    if( j == 1)
+    {
+      Node * changeNode = waitingPatients->front;
+
+      Patient * changePatient = (Patient*)changeNode->data;
+
+      changePatient->waitingTime ++;
+
+
+    }
+    else
+    {
+      int heapLevel = 0;
+      int heapLevelSum = 0;
+      int heapBottom = 0;
+      int i;
+      int j1 = j -1;
+      while(heapLevelSum + pow(2 , heapLevel) <= j1)
+      {
+        heapLevelSum = heapLevelSum + pow(2 , heapLevel);
+        heapLevel++;
+      }
+
+      heapBottom = j1 - heapLevelSum;
+      Node * changeNode = waitingPatients->front;
+
+      int heapBottomSum = pow(2 , heapLevel);
+      int mid = heapBottomSum/2;
+
+      for(i = 0; i < heapLevel; i++)
+      {
+        if(heapBottom < mid)
+        {
+          changeNode = changeNode->left;
+        }
+        else
+        {
+          changeNode = changeNode->right;
+          heapBottom = heapBottom -mid;
+
+        }
+          mid = mid/2;
+      }
+
+      Patient * changePatient = (Patient*)changeNode->data;
+
+      changePatient->waitingTime ++;
+      if((changePatient->waitingTime / 10) == 0)
+      {
+        if(changePatient->priority > 1)
+        {
+          changePatient->priority --;
+        }
+        /*changePatient->waitingTime = 0;*/
+      }
+      heapifyUp(waitingPatients->heap, changeNode);
+
+    }
+  }
 }

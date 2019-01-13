@@ -4,13 +4,22 @@
 #include"heaphelper.h"
 #include"heap.h"
 
+//User defined function
+void print(void *toBePrinted)
+{
+  int number;
 
+  number = *((int *) toBePrinted);
+  printf("%d\n", number);
+}
 
+//User defined function
 void delete(void *toBeDeleted)
 {
   free(toBeDeleted);
 }
 
+//User defined function
 int compare(const void *first,const void *second)
 {
   int *a = (int*) first;
@@ -27,12 +36,9 @@ int main ()
     int * ptr5 = malloc(sizeof(int));
     int * ptr6 = malloc(sizeof(int));
     int * ptr7 = malloc(sizeof(int));
-    int * ptr8 = malloc(sizeof(int));
+    /*int * ptr8 = malloc(sizeof(int));
     int * ptr9 = malloc(sizeof(int));
-    int * ptr10 = malloc(sizeof(int));
-
-
-
+    int * ptr10 = malloc(sizeof(int));*/
 
     *ptr1 = 1;
     *ptr2 = 2;
@@ -41,139 +47,77 @@ int main ()
     *ptr5 = 4;
     *ptr6 = 10;
     *ptr7 = 8;
-    *ptr8 = 9;
+  /*  *ptr8 = 9;
     *ptr9 = 89;
-    *ptr10 = 95;
+    *ptr10 = 95;*/
 
 
     printf("*** Test #1: createHeapNode ***\n");
-    printf("Expected:\n\n");
+    printf("Expected:\n");
+    printf("HeapNode is NOT null\n");
     Node * newNode1 = createHeapNode(ptr1);
-    Node * newNode2 = createHeapNode(ptr2);
-    print(newNode1->data);
-    print(newNode2->data);
     printf("Received:\n");
-    printf("   ***PASS***   \n\n");
+    printf("%s\n", newNode1 ? "HeapNode is NOT null" : "HeapNode is NULL");
+    printf("%s", newNode1 ? "   ***PASS***   \n\n" : "   ***FAILED***   \n\n");
 
     printf("*** Test #2: createHeap ***\n");
-    printf("Expected:\n\n");
+    printf("Expected:\n");
+    printf("Heap is NOT null\n");
     Heap * newHeap = createHeap(5, 0, delete, print , compare);
-    printf("Received:\n\n");
-    printf("   ***PASS***   \n\n");
-
+    printf("Received:\n");
+    printf("%s\n", newHeap ? "Heap is NOT null" : "Heap is NULL");
+    printf("%s", newHeap ? "   ***PASS***   \n\n" : "   ***FAILED***   \n\n");
 
     printf("*** Test #3: insertHeapNode ***\n");
     printf("Expected:\n\n");
+    printf("Position 1: 1\nPosition 2: 2\nPosition 3: 3\nPosition 4: 5\nPosition 5: 4\nPosition 6: 10\nPosition 7: 8\n");
     insertHeapNode(newHeap, ptr1);
-    printHeap(newHeap);
     insertHeapNode(newHeap, ptr2);
-    printHeap(newHeap);
     insertHeapNode(newHeap, ptr3);
-    printHeap(newHeap);
     insertHeapNode(newHeap, ptr4);
-    printHeap(newHeap);
     insertHeapNode(newHeap, ptr5);
-    printHeap(newHeap);
     insertHeapNode(newHeap, ptr6);
-    printHeap(newHeap);
     insertHeapNode(newHeap, ptr7);
+    printf("\nReceived:\n\n");
     printHeap(newHeap);
-    printf("Received:\n\n");
     printf("   ***PASS***   \n\n");
 
-    printf("*** Test #2: deleteMinOrMax ***\n");
+    printf("*** Test #4a: deleteMinOrMax ***\n");
     printf("Expected:\n\n");
-    /*deleteMinOrMax(newHeap);
-    printHeap(newHeap);
-
+    printf("Position 1: 2\nPosition 2: 4\nPosition 3: 3\nPosition 4: 5\nPosition 5: 8\nPosition 6: 10\n");
     deleteMinOrMax(newHeap);
+    printf("\nReceived:\n\n");
     printHeap(newHeap);
-
-    deleteMinOrMax(newHeap);
-
-    printHeap(newHeap);*/
-   changeHeapType(newHeap);
-    printHeap(newHeap);
-    changeHeapType(newHeap);
-     printHeap(newHeap);
-     insertHeapNode(newHeap, ptr10);
-     printHeap(newHeap);
-     insertHeapNode(newHeap, ptr8);
-     printHeap(newHeap);
-     changeHeapType(newHeap);
-      printHeap(newHeap);
-      changeHeapType(newHeap);
-       printHeap(newHeap);
-       changeHeapType(newHeap);
-        printHeap(newHeap);
-        insertHeapNode(newHeap, ptr9);
-        printHeap(newHeap);
-        changeHeapType(newHeap);
-         printHeap(newHeap);
-         changeHeapType(newHeap);
-          printHeap(newHeap);
-    /*changeHeapType(newHeap);
-    printHeap(newHeap);
-    changeHeapType(newHeap);
-    printHeap(newHeap);
-    changeHeapType(newHeap);
-    printHeap(newHeap);*/
-    /*deleteHeap(newHeap);
-    printf("After deleting\n");
-    printHeap(newHeap);*/
-
-    /*insertHeapNode(newHeap, ptr8);
-
-    printHeap(newHeap);
-
-    deleteMinOrMax(newHeap);
-    printHeap(newHeap);*/
-
-    printf("Received:\n\n");
     printf("   ***PASS***   \n\n");
 
-    /*
-    int heapLevel = 0;
-    int heapLevelSum = 0;
-    int heapBottom = 0;
-    int sizeInit = 12;
-    int size = sizeInit -1;
+    printf("*** Test #4b: deleteMinOrMax ***\n");
+    printf("Expected:\n\n");
+    printf("Position 1: 3\nPosition 2: 4\nPosition 3: 10\nPosition 4: 5\nPosition 5: 8\n");
+    deleteMinOrMax(newHeap);
+    printf("\nReceived:\n\n");
+    printHeap(newHeap);
+    printf("   ***PASS***   \n\n");
 
+    printf("*** Test #5: getMinOrMax ***\n");
+    printf("Expected: 3\n");
+    printf("Received: ");
+    print(getMinOrMax(newHeap));
+    printf("   ***PASS***   \n\n");
 
-    while(heapLevelSum + pow(2 , heapLevel) <= size)
-    {
-      heapLevelSum = heapLevelSum + pow(2 , heapLevel);
-      heapLevel++;
-    }
+    printf("*** Test #6: changeHeapType ***\n");
+    printf("Expected:\n");
+    printf("Position 1: 10\nPosition 2: 5\nPosition 3: 8\nPosition 4: 3\nPosition 5: 4\n");
+    printf("Received:\n");
+    changeHeapType(newHeap);
+    printHeap(newHeap);
+    printf("   ***PASS***   \n\n");
 
-    heapBottom = size - heapLevelSum;
-    int heapBottomSum = pow(2 , heapLevel);
-    printf("Level: %d, Size: %d [%d + %d], Next:%d\n", heapLevel, size, heapLevelSum, heapBottom ,heapBottomSum);
-
-    int mid = heapBottomSum/2;
-    int i;
-
-
-    for(i = 0; i < heapLevel; i++)
-    {
-
-      if(heapBottom < mid)
-      {
-        printf("left\n");
-      }
-      else
-      {
-        printf("right\n");
-
-        heapBottom = heapBottom -mid;
-      }
-      printf("heapBottom: %d\n", heapBottom);
-      printf("mid: %d\n", mid);
-      mid = mid/2;
-    }
-
-*/
-
-
+    printf("*** Test #7: deleteHeap***\n");
+    printf("Expected:\n");
+    printf("Heap is NULL\n");
+    deleteHeap(newHeap);
+    printf("Received:\n");
+    printf("%s\n", newHeap->heap ? "Heap is NOT null" : "Heap is NULL");
+    printf("%s", newHeap->heap ? "   ***FAILED***   \n\n" : "   ***PASS***   \n\n");
     return 0;
 }

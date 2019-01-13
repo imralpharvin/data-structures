@@ -27,6 +27,7 @@ void deQueue(PQueue *pqueue)
   pqueue->front = pqueue->heap->heap;
 }
 
+
 void deletePriorityQueue(PQueue *pqueue)
 {
   deleteHeap(pqueue->heap);

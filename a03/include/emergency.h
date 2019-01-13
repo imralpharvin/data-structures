@@ -13,6 +13,8 @@ typedef struct patient
   char symptomCode[3];
   int arrivalTime;
   int waitingTime;
+  int oldPriority;
+
 }Patient;
 
 void loadPatients(char *filename, PQueue * allPatients);
@@ -24,6 +26,8 @@ int compareArrivalTime(const void *first,const void *second);
 int getWaitingTime(void * data);
 int comparePriority(const void *first,const void *second);
 int getArrivalTime(void * data);
+void updateWaitingTime(PQueue * waitingPatients);
+
 
 
 #endif
