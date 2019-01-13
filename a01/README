@@ -1,0 +1,65 @@
+****************************************************
+Ralph Arvin De Castro		    0923223
+CIS*2520		Assignment 1 Four Way Stop Simulation
+June 4 2018			rdecastr@uoguelph.ca
+****************************************************
+
+
+************************
+Program Description
+**************************
+ This program implements a simple four way stop simulation. All requirements from the assignment are followed.
+
+ **Special Rules for traffic:
+ 1.If two cars coming from opposite directions(N & S, E & W) arrive at the front of the queue at the same time:
+  E goes first. W goes second
+  N goes first. S goes second
+ 2.If four cars coming from different directions(N, S, E, W) arrive at the front of the queue at the same time:
+  N goes first. Then Ontario right of way rules applies again.
+
+
+************
+Compilation
+************
+ To compile this code:
+ run: make
+
+ To compile the testing program:
+ run: make test
+
+  Detailed Make options:
+
+  make  compiles the main.c program with the library
+  make cppcheck runs the cppcheck option
+  make test compiles the testing.c program with the library
+  make clean removes executable files
+
+************
+Execution
+************
+ To execute main:
+ run: ./bin/runMe assets/"filename"
+
+ To execute test:
+ run: ./bin/testMe
+
+************
+Complexity
+************
+initializeQueue
+  O(1) - only goes through the function to initialize queue and its members. Its complexity does not depend on the size of sample input.
+deleteQueue
+  O(N) - deletes every node through a for loop. Complexity depends on the size of sample input.
+enQueue
+  O(1) - only adds one node to the queue. Its complexity does not depend on the size of sample input.
+deQueue
+  O(1) - only removes one node from the queue. Its complexity does not depend on the size of sample input.
+peekQueue
+  O(1) - only looks at one node of the queue. Its complexity does not depend on the size of sample input.
+printQueue
+  O(N) - goes through every node to print. Complexity depends on the size of sample input or size of queue.
+
+
+****************************
+Known Limitations, Issues and Errors
+****************************

@@ -1,0 +1,174 @@
+\hypertarget{QueueADT_8h}{}\section{include/\+Queue\+A\+DT.h File Reference}
+\label{QueueADT_8h}\index{include/\+Queue\+A\+D\+T.\+h@{include/\+Queue\+A\+D\+T.\+h}}
+
+
+File containing the function definitions of a queue wrapping a doubly linked list.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}Linked\+List\+A\+P\+I.\+h\char`\"{}}\newline
+Include dependency graph for Queue\+A\+D\+T.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=296pt]{QueueADT_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structqueue}{queue}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structqueue}{queue} \hyperlink{QueueADT_8h_a8560ae2ddf510ea6643f85a929bffa48}{Queue}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{QueueADT_8h_a8560ae2ddf510ea6643f85a929bffa48}{Queue} $\ast$ \hyperlink{QueueADT_8h_ad4f29ef77837d019f60ae26efb2ee7e2}{initialize\+Queue} (void($\ast$print\+Function)(void $\ast$to\+Be\+Printed), void($\ast$delete\+Function)(void $\ast$to\+Be\+Deleted), int($\ast$compare\+Function)(const void $\ast$first, const void $\ast$second))
+\item 
+void \hyperlink{QueueADT_8h_a8c22894fe355fc7eea3af009a8d41867}{delete\+Queue} (\hyperlink{QueueADT_8h_a8560ae2ddf510ea6643f85a929bffa48}{Queue} $\ast$\hyperlink{structqueue}{queue})
+\item 
+void \hyperlink{QueueADT_8h_af51b2730757b0b85ef389659909c64a6}{en\+Queue} (\hyperlink{QueueADT_8h_a8560ae2ddf510ea6643f85a929bffa48}{Queue} $\ast$\hyperlink{structqueue}{queue}, void $\ast$to\+Be\+Added)
+\item 
+void $\ast$ \hyperlink{QueueADT_8h_ab63d17936f81189aa01a9371c67d1745}{de\+Queue} (\hyperlink{QueueADT_8h_a8560ae2ddf510ea6643f85a929bffa48}{Queue} $\ast$\hyperlink{structqueue}{queue})
+\item 
+void $\ast$ \hyperlink{QueueADT_8h_ab3741001a45bf0fd0ceb260ce86527bd}{peek\+Queue} (\hyperlink{QueueADT_8h_a8560ae2ddf510ea6643f85a929bffa48}{Queue} $\ast$\hyperlink{structqueue}{queue})
+\item 
+void \hyperlink{QueueADT_8h_aa3e18bd8ba406c1ef7d07eb21f003091}{print\+Queue} (\hyperlink{QueueADT_8h_a8560ae2ddf510ea6643f85a929bffa48}{Queue} $\ast$\hyperlink{structqueue}{queue})
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+File containing the function definitions of a queue wrapping a doubly linked list. 
+
+\begin{DoxyAuthor}{Author}
+Ralph Arvin De Castro 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+June 2018 
+\end{DoxyDate}
+
+
+\subsection{Typedef Documentation}
+\mbox{\Hypertarget{QueueADT_8h_a8560ae2ddf510ea6643f85a929bffa48}\label{QueueADT_8h_a8560ae2ddf510ea6643f85a929bffa48}} 
+\index{Queue\+A\+D\+T.\+h@{Queue\+A\+D\+T.\+h}!Queue@{Queue}}
+\index{Queue@{Queue}!Queue\+A\+D\+T.\+h@{Queue\+A\+D\+T.\+h}}
+\subsubsection{\texorpdfstring{Queue}{Queue}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structqueue}{queue} \hyperlink{QueueADT_8h_a8560ae2ddf510ea6643f85a929bffa48}{Queue}}
+
+Queue. It contains a list pointer, a node pointer that points to the front of the queue and length that determines number of elements. 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{QueueADT_8h_a8c22894fe355fc7eea3af009a8d41867}\label{QueueADT_8h_a8c22894fe355fc7eea3af009a8d41867}} 
+\index{Queue\+A\+D\+T.\+h@{Queue\+A\+D\+T.\+h}!delete\+Queue@{delete\+Queue}}
+\index{delete\+Queue@{delete\+Queue}!Queue\+A\+D\+T.\+h@{Queue\+A\+D\+T.\+h}}
+\subsubsection{\texorpdfstring{delete\+Queue()}{deleteQueue()}}
+{\footnotesize\ttfamily void delete\+Queue (\begin{DoxyParamCaption}\item[{\hyperlink{QueueADT_8h_a8560ae2ddf510ea6643f85a929bffa48}{Queue} $\ast$}]{queue }\end{DoxyParamCaption})}
+
+Deletes the queue from front, starting with the nodes, then list, then queue itself. \begin{DoxyPrecond}{Precondition}
+\textquotesingle{}Queue\textquotesingle{} type must exist. 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+Nodes,list and queue are deleted and freed. 
+\end{DoxyPostcond}
+
+\begin{DoxyParams}{Parameters}
+{\em queue} & pointer to a queue \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{QueueADT_8h_ab63d17936f81189aa01a9371c67d1745}\label{QueueADT_8h_ab63d17936f81189aa01a9371c67d1745}} 
+\index{Queue\+A\+D\+T.\+h@{Queue\+A\+D\+T.\+h}!de\+Queue@{de\+Queue}}
+\index{de\+Queue@{de\+Queue}!Queue\+A\+D\+T.\+h@{Queue\+A\+D\+T.\+h}}
+\subsubsection{\texorpdfstring{de\+Queue()}{deQueue()}}
+{\footnotesize\ttfamily void$\ast$ de\+Queue (\begin{DoxyParamCaption}\item[{\hyperlink{QueueADT_8h_a8560ae2ddf510ea6643f85a929bffa48}{Queue} $\ast$}]{queue }\end{DoxyParamCaption})}
+
+Removes a Node to the end of a queue \begin{DoxyReturn}{Returns}
+void pointer that points to the deleted node 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+\textquotesingle{}Queue\textquotesingle{} type must exist 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+A node is removed and length decreases 
+\end{DoxyPostcond}
+
+\begin{DoxyParams}{Parameters}
+{\em queue} & a pointer to a queue \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{QueueADT_8h_af51b2730757b0b85ef389659909c64a6}\label{QueueADT_8h_af51b2730757b0b85ef389659909c64a6}} 
+\index{Queue\+A\+D\+T.\+h@{Queue\+A\+D\+T.\+h}!en\+Queue@{en\+Queue}}
+\index{en\+Queue@{en\+Queue}!Queue\+A\+D\+T.\+h@{Queue\+A\+D\+T.\+h}}
+\subsubsection{\texorpdfstring{en\+Queue()}{enQueue()}}
+{\footnotesize\ttfamily void en\+Queue (\begin{DoxyParamCaption}\item[{\hyperlink{QueueADT_8h_a8560ae2ddf510ea6643f85a929bffa48}{Queue} $\ast$}]{queue,  }\item[{void $\ast$}]{to\+Be\+Added }\end{DoxyParamCaption})}
+
+Inserts a Node to the end of a queue \begin{DoxyPrecond}{Precondition}
+\textquotesingle{}Queue\textquotesingle{} type must exist and data to be added must exist 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+A node is inserted and length increases 
+\end{DoxyPostcond}
+
+\begin{DoxyParams}{Parameters}
+{\em queue} & a pointer to a queue \\
+\hline
+{\em to\+Be\+Added} & a pointer to data that is to be added to the linked list \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{QueueADT_8h_ad4f29ef77837d019f60ae26efb2ee7e2}\label{QueueADT_8h_ad4f29ef77837d019f60ae26efb2ee7e2}} 
+\index{Queue\+A\+D\+T.\+h@{Queue\+A\+D\+T.\+h}!initialize\+Queue@{initialize\+Queue}}
+\index{initialize\+Queue@{initialize\+Queue}!Queue\+A\+D\+T.\+h@{Queue\+A\+D\+T.\+h}}
+\subsubsection{\texorpdfstring{initialize\+Queue()}{initializeQueue()}}
+{\footnotesize\ttfamily \hyperlink{QueueADT_8h_a8560ae2ddf510ea6643f85a929bffa48}{Queue}$\ast$ initialize\+Queue (\begin{DoxyParamCaption}\item[{void($\ast$)(void $\ast$to\+Be\+Printed)}]{print\+Function,  }\item[{void($\ast$)(void $\ast$to\+Be\+Deleted)}]{delete\+Function,  }\item[{int($\ast$)(const void $\ast$first, const void $\ast$second)}]{compare\+Function }\end{DoxyParamCaption})}
+
+Function to allocate memory to the struct, initialize list pointer, setting front to the the list of the head, initialize length to 0 \begin{DoxyReturn}{Returns}
+pointer to the queue 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em print\+Function} & function pointer that prints a single node of the queue \\
+\hline
+{\em delete\+Function} & function pointer that deletes a single piece of data from the queue \\
+\hline
+{\em compare\+Function} & function pointer that compares two nodes of the list \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{QueueADT_8h_ab3741001a45bf0fd0ceb260ce86527bd}\label{QueueADT_8h_ab3741001a45bf0fd0ceb260ce86527bd}} 
+\index{Queue\+A\+D\+T.\+h@{Queue\+A\+D\+T.\+h}!peek\+Queue@{peek\+Queue}}
+\index{peek\+Queue@{peek\+Queue}!Queue\+A\+D\+T.\+h@{Queue\+A\+D\+T.\+h}}
+\subsubsection{\texorpdfstring{peek\+Queue()}{peekQueue()}}
+{\footnotesize\ttfamily void$\ast$ peek\+Queue (\begin{DoxyParamCaption}\item[{\hyperlink{QueueADT_8h_a8560ae2ddf510ea6643f85a929bffa48}{Queue} $\ast$}]{queue }\end{DoxyParamCaption})}
+
+Looks at the data of the front of the queue \begin{DoxyReturn}{Returns}
+void pointer that points to the data of the front node 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+\textquotesingle{}Queue\textquotesingle{} type and front must exist 
+\end{DoxyPrecond}
+
+\begin{DoxyParams}{Parameters}
+{\em queue} & a pointer to a queue \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{QueueADT_8h_aa3e18bd8ba406c1ef7d07eb21f003091}\label{QueueADT_8h_aa3e18bd8ba406c1ef7d07eb21f003091}} 
+\index{Queue\+A\+D\+T.\+h@{Queue\+A\+D\+T.\+h}!print\+Queue@{print\+Queue}}
+\index{print\+Queue@{print\+Queue}!Queue\+A\+D\+T.\+h@{Queue\+A\+D\+T.\+h}}
+\subsubsection{\texorpdfstring{print\+Queue()}{printQueue()}}
+{\footnotesize\ttfamily void print\+Queue (\begin{DoxyParamCaption}\item[{\hyperlink{QueueADT_8h_a8560ae2ddf510ea6643f85a929bffa48}{Queue} $\ast$}]{queue }\end{DoxyParamCaption})}
+
+Prints the data of the nodes of queue from front to end \begin{DoxyPrecond}{Precondition}
+\textquotesingle{}Queue\textquotesingle{} type and front must exist 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+Data of nodes are printed accordingly 
+\end{DoxyPostcond}
+
+\begin{DoxyParams}{Parameters}
+{\em queue} & a pointer to a queue \\
+\hline
+\end{DoxyParams}
